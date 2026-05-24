@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from .models import Comodidade
+from rest_framework import viewsets
+from .serializer import ComodidadeSerializer
 
-# Create your views here.
+
+class ComodidadeViewSet(viewsets.ModelViewSet):
+    queryset = Comodidade.objects.all()
+    serializer_class = ComodidadeSerializer
