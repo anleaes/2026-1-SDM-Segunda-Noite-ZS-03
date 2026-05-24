@@ -1,0 +1,22 @@
+# Django
+*.pyc
+__pycache__/
+*.sqlite3
+
+# Ambiente
+.env
+
+# Apps
+/apps/*/__pycache__/*
+/apps/*/migrations/*
+
+# Media
+/media/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
