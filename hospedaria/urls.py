@@ -24,4 +24,5 @@ urlpatterns = [
     path('comodidades/', include('comodidades.urls', namespace='comodidades')),
     path('hospedes/', include('hospedes.urls', namespace='hospedes')),
     path('anfitrioes/', include('anfitrioes.urls', namespace='anfitrioes')),
+    path('hospedagens/', include('hospedagens.urls', namespace='hospedagens')),
 ]
