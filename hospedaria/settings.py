@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'widget_tweaks',
     'usuarios.apps.UsuariosConfig',
+    'enderecos.apps.EnderecosConfig',
 ]
 
 MIDDLEWARE = [
