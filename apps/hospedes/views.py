@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from .models import Hospede
+from rest_framework import viewsets
+from .serializer import HospedeSerializer
 
-# Create your views here.
+
+class HospedeViewSet(viewsets.ModelViewSet):
+    queryset = Hospede.objects.all()
+    serializer_class = HospedeSerializer
