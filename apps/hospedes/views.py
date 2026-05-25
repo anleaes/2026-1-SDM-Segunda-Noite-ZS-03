@@ -1,7 +1,11 @@
 from rest_framework import viewsets
-from .models import Hospedes
-from .serializer import HospedesSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from .models import Hospede
+from .serializer import HospedeSerializer
 
-class HospedesViewSet(viewsets.ModelViewSet):
-    queryset = Hospedes.objects.all()
-    serializer_class = HospedesSerializer
+class HospedeViewSet(viewsets.ModelViewSet):
+    queryset = Hospede.objects.all()
+    serializer_class = HospedeSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
