@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [    'comodidades.apps.ComodidadesConfig',
     'hospedes.apps.HospedesConfig',
     'anfitrioes.apps.AnfitriaosConfig',
     'hospedagens.apps.HospedagemsConfig',
+    'reservas.apps.ReservasConfig',
 ]
 
 
