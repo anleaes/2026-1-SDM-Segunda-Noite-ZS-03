@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [    'comodidades.apps.ComodidadesConfig',
     'hospedagens.apps.HospedagemsConfig',
     'reservas.apps.ReservasConfig',
     'pagamentos.apps.PagamentosConfig',
+    'avaliacoes.apps.AvaliacaosConfig',
 ]
 
 
