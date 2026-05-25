@@ -1,7 +1,11 @@
 from rest_framework import viewsets
-from .models import Anfitrioes
-from .serializer import AnfitrioesSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from .models import Anfitriao
+from .serializer import AnfitriaoSerializer
 
-class AnfitrioesViewSet(viewsets.ModelViewSet):
-    queryset = Anfitrioes.objects.all()
-    serializer_class = AnfitrioesSerializer
+class AnfitriaoViewSet(viewsets.ModelViewSet):
+    queryset = Anfitriao.objects.all()
+    serializer_class = AnfitriaoSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
