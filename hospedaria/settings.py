@@ -31,15 +31,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = [    'comodidades.apps.ComodidadesConfig',
-    'hospedes.apps.HospedesConfig',
-    'anfitrioes.apps.AnfitriaosConfig',
-    'hospedagens.apps.HospedagemsConfig',
-    'reservas.apps.ReservasConfig',
-    'pagamentos.apps.PagamentosConfig',
-    'avaliacoes.apps.AvaliacaosConfig',
-    'mensagens.apps.MensagemsConfig',
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -58,6 +50,14 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'usuarios.apps.UsuariosConfig',
     'enderecos.apps.EnderecosConfig',
+    'comodidades.apps.ComodidadesConfig',
+    'hospedes.apps.HospedesConfig',
+    'anfitrioes.apps.AnfitriaosConfig',
+    'hospedagens.apps.HospedagemsConfig',
+    'reservas.apps.ReservasConfig',
+    'pagamentos.apps.PagamentosConfig',
+    'avaliacoes.apps.AvaliacaosConfig',
+    'mensagens.apps.MensagemsConfig',
 ]
 
 MIDDLEWARE = [
