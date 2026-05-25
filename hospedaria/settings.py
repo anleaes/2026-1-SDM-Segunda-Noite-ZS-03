@@ -48,7 +48,16 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'widget_tweaks',
+    'usuarios.apps.UsuariosConfig',
+    'enderecos.apps.EnderecosConfig',
+    'comodidades.apps.ComodidadesConfig',
+    'hospedes.apps.HospedesConfig',
+    'anfitrioes.apps.AnfitriaosConfig',
+    'hospedagens.apps.HospedagemsConfig',
+    'reservas.apps.ReservasConfig',
     'pagamentos.apps.PagamentosConfig',
+    'avaliacoes.apps.AvaliacaosConfig',
+    'mensagens.apps.MensagemsConfig',
 ]
 
 MIDDLEWARE = [
