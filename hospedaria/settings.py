@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'widget_tweaks',
+    'comodidades.apps.ComodidadesConfig',
 ]
 
 MIDDLEWARE = [
