@@ -1,3 +1,7 @@
+from .models import Pagamento
 from rest_framework import serializers
 
-# TODO: import model and create serializer
+class PagamentoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pagamento
+        fields = '__all__'
