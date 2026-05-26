@@ -1,7 +1,11 @@
 from rest_framework import viewsets
-from .models import Avaliacoes
-from .serializer import AvaliacoesSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from .models import Avaliacao
+from .serializer import AvaliacaoSerializer
 
-class AvaliacoesViewSet(viewsets.ModelViewSet):
-    queryset = Avaliacoes.objects.all()
-    serializer_class = AvaliacoesSerializer
+class AvaliacaoViewSet(viewsets.ModelViewSet):
+    queryset = Avaliacao.objects.all()
+    serializer_class = AvaliacaoSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
