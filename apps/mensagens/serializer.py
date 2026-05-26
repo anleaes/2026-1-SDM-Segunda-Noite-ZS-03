@@ -1,3 +1,7 @@
+from .models import Mensagem
 from rest_framework import serializers
 
-# TODO: import model and create serializer
+class MensagemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Mensagem
+        fields = '__all__'
