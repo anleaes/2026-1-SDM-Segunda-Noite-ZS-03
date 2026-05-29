@@ -14,4 +14,4 @@ class Anfitriao(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return f'{self.id} - {self.nome}'
+        return f"Anfitrião: {self.nome} (ID: {self.id})"
