@@ -10,3 +10,4 @@ class AnfitriaoViewSet(viewsets.ModelViewSet):
     serializer_class = AnfitriaoSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    http_method_names = ['get', 'post', 'put', 'patch']
