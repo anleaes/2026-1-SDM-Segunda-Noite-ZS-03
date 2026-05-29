@@ -2,7 +2,7 @@ from django.db import models
 
 class Usuario(models.Model):
     nome = models.CharField('Nome', max_length=100)
-    email = models.EmailField('E-mail', unique=True)
+    email = models.EmailField('Email', unique=True)
     telefone = models.CharField('Telefone', max_length=20)
     cpf = models.CharField('CPF', max_length=14, unique=True)
     data_nascimento = models.DateField('Data de Nascimento')
