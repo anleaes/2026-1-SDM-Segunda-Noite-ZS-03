@@ -5,9 +5,9 @@ from . import views
 
 app_name = 'anfitrioes'
 
-router = routers.SimpleRouter()
+router = routers.DefaultRouter()
 router.register('', views.AnfitriaoViewSet, basename='anfitrioes')
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]
