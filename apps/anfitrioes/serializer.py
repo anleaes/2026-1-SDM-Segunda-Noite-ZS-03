@@ -1,5 +1,7 @@
-from .models import Anfitriao
 from rest_framework import serializers
+
+from .models import Anfitriao
+
 
 class AnfitriaoSerializer(serializers.ModelSerializer):
     class Meta:
