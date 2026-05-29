@@ -6,4 +6,4 @@ from .models import Anfitriao
 class AnfitriaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Anfitriao
-        fields = '__all__'
+        fields = ("id", "nome", "email", "telefone", "documento", "bio", "avaliacao_media")
