@@ -1,5 +1,7 @@
-from .models import Avaliacao
 from rest_framework import serializers
+
+from .models import Avaliacao
+
 
 class AvaliacaoSerializer(serializers.ModelSerializer):
     class Meta:
