@@ -6,7 +6,7 @@ from .models import Avaliacao
 from .serializer import AvaliacaoSerializer
 
 class AvaliacaoViewSet(viewsets.ModelViewSet):
-    queryset = Avaliacao.objects.all()
+    queryset = Avaliacao.objects.all().order_by('id')
     serializer_class = AvaliacaoSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
