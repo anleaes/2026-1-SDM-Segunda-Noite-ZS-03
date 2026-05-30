@@ -6,4 +6,4 @@ from .models import Avaliacao
 class AvaliacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Avaliacao
-        fields = '__all__'
+        fields = ("id", "hospedagem", "nome_hospede", "email", "nota", "comentario", "data_avaliacao")
