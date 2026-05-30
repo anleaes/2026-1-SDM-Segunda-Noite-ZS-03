@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class Anfitriao(models.Model):
     nome = models.CharField(
         verbose_name="Nome",
