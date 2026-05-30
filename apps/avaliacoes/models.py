@@ -14,4 +14,4 @@ class Avaliacao(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return f'{self.id} - {self.nota} - {self.hospedagem}'
+        return f"Avaliação #{self.id}: Nota {self.nota} para {self.hospedagem}"
