@@ -6,7 +6,7 @@ from .models import Comodidade
 from .serializer import ComodidadeSerializer
 
 class ComodidadeViewSet(viewsets.ModelViewSet):
-    queryset = Comodidade.objects.all()
+    queryset = Comodidade.objects.all().order_by('id')
     serializer_class = ComodidadeSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
