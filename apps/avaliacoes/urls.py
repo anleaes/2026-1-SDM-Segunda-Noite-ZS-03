@@ -5,9 +5,9 @@ from . import views
 
 app_name = 'avaliacoes'
 
-router = routers.SimpleRouter()
+router = routers.DefaultRouter()
 router.register('', views.AvaliacaoViewSet, basename='avaliacoes')
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]
