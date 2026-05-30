@@ -1,6 +1,7 @@
 from django.urls import path, include
-from . import views
 from rest_framework import routers
+
+from . import views
 
 app_name = 'avaliacoes'
 
