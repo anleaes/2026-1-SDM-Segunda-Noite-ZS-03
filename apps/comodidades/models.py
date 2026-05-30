@@ -12,4 +12,4 @@ class Comodidade(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return f'{self.id} - {self.nome}'
+        return f"Comodidade #{self.id}: {self.nome}"
