@@ -5,9 +5,10 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Anfitriao
 from .serializer import AnfitriaoSerializer
 
+
 class AnfitriaoViewSet(viewsets.ModelViewSet):
     queryset = Anfitriao.objects.all()
     serializer_class = AnfitriaoSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-    http_method_names = ['get', 'post', 'put', 'patch']
+    http_method_names = ["get", "post", "put", "patch"]
