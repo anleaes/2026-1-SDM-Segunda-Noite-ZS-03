@@ -5,8 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Avaliacao
 from .serializer import AvaliacaoSerializer
 
+
 class AvaliacaoViewSet(viewsets.ModelViewSet):
-    queryset = Avaliacao.objects.all().order_by('id')
+    queryset = Avaliacao.objects.all().order_by("id")
     serializer_class = AvaliacaoSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
