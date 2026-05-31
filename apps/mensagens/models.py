@@ -16,5 +16,8 @@ class Mensagem(models.Model):
         ordering = ["id"]
 
     def __str__(self):
-        return f"{self.id} - {self.assunto} - {self.nome}"
+        return (
+            f"Mensagem {self.id}: "
+            f"De {self.nome} - Assunto: {self.assunto}"
+        )
     
