@@ -14,4 +14,4 @@ class Hospede(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return f'{self.id} - {self.nome}'
+        return f"Hóspede {self.id}: {self.nome} - Doc: {self.documento}"
