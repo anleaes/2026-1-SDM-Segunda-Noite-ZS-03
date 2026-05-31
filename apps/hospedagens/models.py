@@ -10,46 +10,16 @@ class Hospedagem(models.Model):
         ("pousada", "Pousada"),
     ]
 
-    titulo = models.CharField(
-        verbose_name="Título",
-        max_length=200,
-    )
-    descricao = models.TextField(
-        verbose_name="Descrição",
-    )
-    tipo = models.CharField(
-        verbose_name="Tipo",
-        max_length=20,
-        choices=TIPO_CHOICES,
-    )
-    endereco = models.ForeignKey(
-        "enderecos.Endereco",
-        verbose_name="Endereço",
-        on_delete=models.CASCADE,
-    )
-    comodidades = models.ManyToManyField(
-        "comodidades.Comodidade",
-        verbose_name="Comodidades",
-        blank=True,
-    )
-    preco_diaria = models.DecimalField(
-        verbose_name="Preço da Diária",
-        max_digits=10,
-        decimal_places=2,
-    )
-    capacidade = models.PositiveIntegerField(
-        verbose_name="Capacidade",
-    )
-    quartos = models.PositiveIntegerField(
-        verbose_name="Quartos",
-    )
-    banheiros = models.PositiveIntegerField(
-        verbose_name="Banheiros",
-    )
-    ativo = models.BooleanField(
-        verbose_name="Ativo",
-        default=True,
-    )
+    titulo = models.CharField("Título", max_length=200)
+    descricao = models.TextField("Descrição")
+    tipo = models.CharField("Tipo", max_length=20, choices=TIPO_CHOICES)
+    endereco = models.ForeignKey("enderecos.Endereco", on_delete=models.CASCADE, verbose_name="Endereço")
+    comodidades = models.ManyToManyField("comodidades.Comodidade", verbose_name="Comodidades", blank=True)
+    preco_diaria = models.DecimalField("Preço da Diária", max_digits=10, decimal_places=2)
+    capacidade = models.PositiveIntegerField("Capacidade")
+    quartos = models.PositiveIntegerField("Quartos")
+    banheiros = models.PositiveIntegerField("Banheiros")
+    ativo = models.BooleanField("Ativo", default=True)
 
     class Meta:
         verbose_name = "Hospedagem"
@@ -57,7 +27,4 @@ class Hospedagem(models.Model):
         ordering = ["id"]
 
     def __str__(self):
-        return (
-            f"Hospedagem #{self.id}: {self.titulo} "
-            f"({self.get_tipo_display()}) - R$ {self.preco_diaria}/dia"
-        )
+        return f"Hospedagem #{self.id}: {self.titulo} ({self.get_tipo_display()}) - R$ {self.preco_diaria}/dia"
