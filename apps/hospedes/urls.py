@@ -9,5 +9,5 @@ router = routers.DefaultRouter()
 router.register("", views.HospedeViewSet, basename="hospedes")
 
 urlpatterns = [
-    path("", include(router.urls))
+    path("", include(router.urls)),
 ]
