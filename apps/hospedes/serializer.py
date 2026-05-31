@@ -6,4 +6,13 @@ from .models import Hospede
 class HospedeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hospede
-        fields = ["id", "nome", "sobrenome", "email", "telefone", "data_nascimento", "nacionalidade", "documento"]
+        fields = [
+            "id",
+            "nome",
+            "sobrenome",
+            "email",
+            "telefone",
+            "data_nascimento",
+            "nacionalidade",
+            "documento",
+        ]
