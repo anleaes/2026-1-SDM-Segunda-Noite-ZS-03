@@ -1,12 +1,12 @@
-from django.urls import path, include
-from . import views
+from django.urls import include, path
 from rest_framework import routers
+from . import views
 
-app_name = 'reservas'
+app_name = "reservas"
 
 router = routers.SimpleRouter()
-router.register('', views.ReservaViewSet, basename='reservas')
+router.register("", views.ReservaViewSet, basename="reservas")
 
 urlpatterns = [
-    path('', include(router.urls))
+    path("", include(router.urls))
 ]
