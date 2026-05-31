@@ -9,5 +9,5 @@ router = routers.DefaultRouter()
 router.register("mensagens", views.MensagemViewSet, basename="mensagens")
 
 urlpatterns = [
-    path("", include(router.urls))
+    path("", include(router.urls)),
 ]
