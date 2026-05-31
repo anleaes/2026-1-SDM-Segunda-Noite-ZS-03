@@ -6,7 +6,7 @@ from .models import Mensagem
 from .serializer import MensagemSerializer
 
 class MensagemViewSet(viewsets.ModelViewSet):
-    queryset = Mensagem.objects.all()
+    queryset = Mensagem.objects.all().order_by('id')
     serializer_class = MensagemSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
