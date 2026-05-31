@@ -1,6 +1,11 @@
 from django.db import models
 
 class Pagamento(models.Model):
+
+    STATUS_PENDENTE = "pendente"
+    STATUS_PAGO = "pago"
+
+
     METODO_CHOICES = [
         ("cartao_credito", "Cartão de Crédito"),
         ("cartao_debito", "Cartão de Débito"),
@@ -10,8 +15,8 @@ class Pagamento(models.Model):
     ]
 
     STATUS_CHOICES = [
-        ("pendente", "Pendente"),
-        ("pago", "Pago"),
+        ("STATUS_PENDENTE", "Pendente"),
+        ("STATUS_PAGO", "Pago"),
         ("cancelado", "Cancelado"),
         ("reembolsado", "Reembolsado"),
     ]
@@ -29,4 +34,7 @@ class Pagamento(models.Model):
         ordering = ["id"]
 
     def __str__(self):
-        return f"{self.id} - {self.reserva}"
+        return (
+            f"Pagamento {self.id}: "
+            f"Reserva {self.reserva_id} - R$ {self.valor} ({self.status})"
+        )
