@@ -6,7 +6,7 @@ from .models import Endereco
 from .serializer import EnderecoSerializer
 
 class EnderecoViewSet(viewsets.ModelViewSet):
-    queryset = Endereco.objects.all()
+    queryset = Endereco.objects.all().order_by('id')
     serializer_class = EnderecoSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
