@@ -1,14 +1,13 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework import routers
 
 from . import views
 
-app_name = 'hospedes'
+app_name = "hospedes"
 
 router = routers.DefaultRouter()
-router.register('', views.HospedeViewSet, basename='hospedes')
+router.register("", views.HospedeViewSet, basename="hospedes")
 
 urlpatterns = [
-    path('', include(router.urls))
+    path("", include(router.urls))
 ]
-
