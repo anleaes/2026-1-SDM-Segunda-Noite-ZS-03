@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Hospedagem
 from .serializer import HospedagemSerializer
 
+
 class HospedagemViewSet(viewsets.ModelViewSet):
     queryset = Hospedagem.objects.all().order_by('id')
     serializer_class = HospedagemSerializer
