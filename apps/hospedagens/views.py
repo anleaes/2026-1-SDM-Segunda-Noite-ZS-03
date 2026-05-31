@@ -6,7 +6,7 @@ from .models import Hospedagem
 from .serializer import HospedagemSerializer
 
 class HospedagemViewSet(viewsets.ModelViewSet):
-    queryset = Hospedagem.objects.all()
+    queryset = Hospedagem.objects.all().order_by('id')
     serializer_class = HospedagemSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
