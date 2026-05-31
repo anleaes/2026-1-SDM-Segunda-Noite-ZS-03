@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Hospede(models.Model):
     nome = models.CharField("Nome", max_length=100)
     email = models.EmailField("E-mail")
@@ -9,9 +10,9 @@ class Hospede(models.Model):
     data_nascimento = models.DateField("Data de Nascimento")
 
     class Meta:
-        verbose_name = 'Hóspede'
-        verbose_name_plural = 'Hóspedes'
-        ordering = ['id']
+        verbose_name = "Hóspede"
+        verbose_name_plural = "Hóspedes"
+        ordering = ["id"]
 
     def __str__(self):
         return f"Hóspede {self.id}: {self.nome} - Doc: {self.documento}"
