@@ -3,7 +3,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Usuario
-from .serializers import UsuarioSerializer
+from .serializer import UsuarioSerializer
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.filter(ativo=True).order_by("id")
