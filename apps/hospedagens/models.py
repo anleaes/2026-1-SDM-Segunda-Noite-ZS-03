@@ -1,12 +1,13 @@
 from django.db import models
 
+
 class Hospedagem(models.Model):
     TIPO_CHOICES = [
-        ('casa', 'Casa'),
-        ('apartamento', 'Apartamento'),
-        ('quarto', 'Quarto'),
-        ('hostel', 'Hostel'),
-        ('pousada', 'Pousada'),
+        ("casa", "Casa"),
+        ("apartamento", "Apartamento"),
+        ("quarto", "Quarto"),
+        ("hostel", "Hostel"),
+        ("pousada", "Pousada"),
     ]
 
     titulo = models.CharField("Título", max_length=200)
@@ -21,9 +22,9 @@ class Hospedagem(models.Model):
     ativo = models.BooleanField("Ativo", default=True)
 
     class Meta:
-        verbose_name = 'Hospedagem'
-        verbose_name_plural = 'Hospedagens'
-        ordering = ['id']
+        verbose_name = "Hospedagem"
+        verbose_name_plural = "Hospedagens"
+        ordering = ["id"]
 
     def __str__(self):
         return f"Hospedagem #{self.id}: {self.titulo} ({self.get_tipo_display()}) - R$ {self.preco_diaria}/dia"
