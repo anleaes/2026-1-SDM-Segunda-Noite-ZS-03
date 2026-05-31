@@ -1,10 +1,12 @@
-from .models import Pagamento
 from rest_framework import serializers
+
+from .models import Pagamento
+
 
 class PagamentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pagamento
-        fields = ["id", "reserva", "valor", "metodo", "status", "data_pagamento", "criado_em",] 
+        fields = ["id", "reserva", "valor", "metodo", "status", "data_pagamento", "criado_em"]
 
     def validate_valor(self, value):
         if value <= 0:
