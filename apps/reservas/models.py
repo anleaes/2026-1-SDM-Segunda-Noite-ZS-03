@@ -22,6 +22,14 @@ class Reserva(models.Model):
         verbose_name_plural = "Reservas"
         ordering = ["id"]
 
-    def __str__(self):
-        return f"{self.id} - {self.hospedagem}"
+    def clean(self):
+        super().clean()
+        if self.data_checkin and self.data_checkout:
+          if self.data_checkout <= self.data_checkin:
+            raise ValidationError("A data de check-out deve ser posterior à data de check-in.")
     
+    def __str__(self):
+        return (
+            f"Reserva {self.id}: "
+            f"Hospede {self.hospede_id} em Hospedagem {self.hospedagem_id} ({self.status})"
+        )
