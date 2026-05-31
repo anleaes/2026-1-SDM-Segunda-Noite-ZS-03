@@ -7,7 +7,7 @@ from .serializer import HospedeSerializer
 
 
 class HospedeViewSet(viewsets.ModelViewSet):
-    queryset = Hospede.objects.all().order_by('id')
+    queryset = Hospede.objects.all().order_by("id")
     serializer_class = HospedeSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
