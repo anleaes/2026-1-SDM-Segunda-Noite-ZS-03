@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Pagamento
 from .serializer import PagamentoSerializer
 
+
 class PagamentoViewSet(viewsets.ModelViewSet):
     queryset = Pagamento.objects.select_related("reserva").all().order_by("id")
     serializer_class = PagamentoSerializer
