@@ -20,12 +20,36 @@ class Pagamento(models.Model):
         ("reembolsado", "Reembolsado"),
     ]
 
-    reserva = models.ForeignKey("reservas.Reserva", on_delete=models.CASCADE, verbose_name="Reserva")
-    valor = models.DecimalField("Valor", max_digits=10, decimal_places=2)
-    metodo = models.CharField("Método", max_length=20, choices=METODO_CHOICES)
-    status = models.CharField("Status", max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDENTE)
-    data_pagamento = models.DateTimeField("Data do Pagamento", blank=True, null=True)
-    criado_em = models.DateTimeField("Criado em", auto_now_add=True)
+    reserva = models.ForeignKey(
+        "reservas.Reserva",
+        verbose_name="Reserva",
+        on_delete=models.CASCADE,
+    )
+    valor = models.DecimalField(
+        verbose_name="Valor",
+        max_digits=10,
+        decimal_places=2,
+    )
+    metodo = models.CharField(
+        verbose_name="Método",
+        max_length=20,
+        choices=METODO_CHOICES,
+    )
+    status = models.CharField(
+        verbose_name="Status",
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_PENDENTE,
+    )
+    data_pagamento = models.DateTimeField(
+        verbose_name="Data do Pagamento",
+        blank=True,
+        null=True,
+    )
+    criado_em = models.DateTimeField(
+        verbose_name="Criado em",
+        auto_now_add=True,
+    )
 
     class Meta:
         verbose_name = "Pagamento"
