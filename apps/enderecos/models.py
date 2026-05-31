@@ -15,4 +15,4 @@ class Endereco(models.Model):
         ordering = ["id"]
 
     def __str__(self):
-        return f'{self.id} - {self.logradouro}, {self.numero}'
+        return f"Endereço{self.id}: {self.logradouro}, {self.numero} - {self.cidade}/{self.estado}"
