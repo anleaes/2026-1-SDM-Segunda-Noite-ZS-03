@@ -5,9 +5,9 @@ from . import views
 
 app_name = 'enderecos'
 
-router = routers.SimpleRouter()
+router = routers.DefaultRouter()
 router.register('', views.EnderecoViewSet, basename='enderecos')
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]
