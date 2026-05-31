@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Mensagem
 from .serializer import MensagemSerializer
 
+
 class MensagemViewSet(viewsets.ModelViewSet):
     queryset = Mensagem.objects.all().order_by('id')
     serializer_class = MensagemSerializer
