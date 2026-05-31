@@ -4,4 +4,4 @@ from rest_framework import serializers
 class HospedeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hospede
-        fields = '__all__'
+        fields = ["id", "nome", "sobrenome", "email", "telefone", "data_nascimento", "nacionalidade", "documento",]
