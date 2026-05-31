@@ -6,7 +6,7 @@ from .models import Usuario
 from .serializers import UsuarioSerializer
 
 class UsuarioViewSet(viewsets.ModelViewSet):
-    queryset = Usuario.objects.all()
+    queryset = Usuario.objects.filter(ativo=True).order_by("id")
     serializer_class = UsuarioSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
