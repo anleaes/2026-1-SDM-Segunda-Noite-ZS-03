@@ -5,8 +5,8 @@ from . import views
 
 app_name = "mensagens"
 
-router = routers.SimpleRouter()
-router.register("", views.MensagemViewSet, basename="mensagens")
+router = routers.DefaultRouter()
+router.register("mensagens", views.MensagemViewSet, basename="mensagens")
 
 urlpatterns = [
     path("", include(router.urls))
