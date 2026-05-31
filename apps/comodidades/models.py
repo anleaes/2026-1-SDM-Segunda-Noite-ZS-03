@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class Comodidade(models.Model):
     nome = models.CharField(
         verbose_name="Nome",
