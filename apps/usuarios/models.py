@@ -15,4 +15,7 @@ class Usuario(models.Model):
         ordering = ["id"]
 
     def __str__(self):
-        return f"{self.id} - {self.nome}"
+        return (
+            f"Usuario {self.id}: "
+            f"{self.nome} - CPF: {self.cpf} (Ativo: {self.ativo})"
+        )
