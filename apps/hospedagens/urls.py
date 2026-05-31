@@ -5,7 +5,7 @@ from . import views
 
 app_name = 'hospedagens'
 
-router = routers.SimpleRouter()
+router = routers.DefaultRouter()
 router.register('', views.HospedagemViewSet, basename='hospedagens')
 
 urlpatterns = [
