@@ -3,10 +3,10 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Reserva
-from .serializers import ReservaSerializer
+from .serializer import ReservaSerializer
 
 class ReservaViewSet(viewsets.ModelViewSet):
-    queryset = Reserva.objects.all()
+    queryset = Reserva.objects.select_related("hospedagem", "hospede").all().order_by("id")
     serializer_class = ReservaSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
