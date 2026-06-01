@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
+from .views import cadastrar_usuario
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('token-autenticacao/', obtain_auth_token),
+    path('cadastro/', cadastrar_usuario),
     path('usuarios/', include('usuarios.urls', namespace='usuarios')),
     path('enderecos/', include('enderecos.urls', namespace='enderecos')),
     path('comodidades/', include('comodidades.urls', namespace='comodidades')),
