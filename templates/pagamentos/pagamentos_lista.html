@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamentos</title>
+  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Hospedaria</p>
+        <h1>Pagamentos</h1>
+      </div>
+      <a class="button primary" href="{% url 'pagamentos:pagamento_criar' %}">Novo pagamento</a>
+    </header>
+
+    {% if messages %}
+      <section class="messages">
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <section class="grid">
+      {% for pagamento in pagamentos %}
+        <article class="card">
+          <div class="card-header">
+            <h2>Pagamento {{ pagamento.id }}</h2>
+            <span class="badge">{{ pagamento.get_status_display }}</span>
+          </div>
+
+          <p class="description">
+            Reserva {{ pagamento.reserva_id }} - R$ {{ pagamento.valor }}
+          </p>
+
+          <dl class="details">
+            <div>
+              <dt>Metodo</dt>
+              <dd>{{ pagamento.get_metodo_display }}</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>{{ pagamento.get_status_display }}</dd>
+            </div>
+            <div>
+              <dt>Pagamento</dt>
+              <dd>{{ pagamento.data_pagamento|date:"d/m/Y H:i"|default:"-" }}</dd>
+            </div>
+            <div>
+              <dt>Criado em</dt>
+              <dd>{{ pagamento.criado_em|date:"d/m/Y H:i" }}</dd>
+            </div>
+          </dl>
+
+          <div class="actions">
+            <a class="button" href="{% url 'pagamentos:pagamento_editar' pagamento.id %}">Editar</a>
+            <form class="delete-form" method="post" action="{% url 'pagamentos:pagamento_excluir' pagamento.id %}">
+              {% csrf_token %}
+              <button class="button danger" type="submit">Excluir</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty">
+          <h2>Nenhum pagamento cadastrado</h2>
+          <p>Crie o primeiro pagamento para visualizar os registros aqui.</p>
+        </div>
+      {% endfor %}
+    </section>
+  </main>
+
+  <script src="{% static 'js/pagamentos.js' %}"></script>
+</body>
+</html>
