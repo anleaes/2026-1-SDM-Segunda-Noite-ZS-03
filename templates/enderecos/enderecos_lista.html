@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enderecos</title>
+  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Hospedaria</p>
+        <h1>Enderecos</h1>
+      </div>
+      <a class="button primary" href="{% url 'enderecos:endereco_criar' %}">Novo endereco</a>
+    </header>
+
+    {% if messages %}
+      <section class="messages">
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <section class="grid">
+      {% for endereco in enderecos %}
+        <article class="card">
+          <div class="card-header">
+            <h2>{{ endereco.logradouro }}, {{ endereco.numero }}</h2>
+            <span class="badge">{{ endereco.estado }}</span>
+          </div>
+
+          <dl class="details">
+            <div>
+              <dt>Bairro</dt>
+              <dd>{{ endereco.bairro }}</dd>
+            </div>
+            <div>
+              <dt>Cidade</dt>
+              <dd>{{ endereco.cidade }}</dd>
+            </div>
+            <div>
+              <dt>CEP</dt>
+              <dd>{{ endereco.cep }}</dd>
+            </div>
+            <div>
+              <dt>Complemento</dt>
+              <dd>{{ endereco.complemento|default:"-" }}</dd>
+            </div>
+          </dl>
+
+          <div class="actions">
+            <a class="button" href="{% url 'enderecos:endereco_editar' endereco.id %}">Editar</a>
+            <form class="delete-form" method="post" action="{% url 'enderecos:endereco_excluir' endereco.id %}">
+              {% csrf_token %}
+              <button class="button danger" type="submit">Excluir</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty">
+          <h2>Nenhum endereco cadastrado</h2>
+          <p>Crie o primeiro endereco para visualizar os registros aqui.</p>
+        </div>
+      {% endfor %}
+    </section>
+  </main>
+
+  <script src="{% static 'js/enderecos.js' %}"></script>
+</body>
+</html>
