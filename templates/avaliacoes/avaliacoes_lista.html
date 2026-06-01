@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avaliacoes</title>
+  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Hospedaria</p>
+        <h1>Avaliacoes</h1>
+      </div>
+      <a class="button primary" href="{% url 'avaliacoes:avaliacao_criar' %}">Nova avaliacao</a>
+    </header>
+
+    {% if messages %}
+      <section class="messages">
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <section class="grid">
+      {% for avaliacao in avaliacoes %}
+        <article class="card">
+          <div class="card-header">
+            <h2>{{ avaliacao.nome_hospede }}</h2>
+            <span class="badge">Nota {{ avaliacao.nota }}</span>
+          </div>
+
+          <p class="description">{{ avaliacao.comentario|default:"Sem comentario." }}</p>
+
+          <dl class="details">
+            <div>
+              <dt>Hospedagem</dt>
+              <dd>{{ avaliacao.hospedagem.titulo }}</dd>
+            </div>
+            <div>
+              <dt>Email</dt>
+              <dd>{{ avaliacao.email }}</dd>
+            </div>
+            <div>
+              <dt>Data</dt>
+              <dd>{{ avaliacao.data_avaliacao|date:"d/m/Y H:i" }}</dd>
+            </div>
+            <div>
+              <dt>Nota</dt>
+              <dd>{{ avaliacao.nota }}/5</dd>
+            </div>
+          </dl>
+
+          <div class="actions">
+            <a class="button" href="{% url 'avaliacoes:avaliacao_editar' avaliacao.id %}">Editar</a>
+            <form class="delete-form" method="post" action="{% url 'avaliacoes:avaliacao_excluir' avaliacao.id %}">
+              {% csrf_token %}
+              <button class="button danger" type="submit">Excluir</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty">
+          <h2>Nenhuma avaliacao cadastrada</h2>
+          <p>Crie a primeira avaliacao para visualizar os registros aqui.</p>
+        </div>
+      {% endfor %}
+    </section>
+  </main>
+
+  <script src="{% static 'js/avaliacoes.js' %}"></script>
+</body>
+</html>
