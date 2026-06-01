@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
-from .views import cadastrar_usuario, perfil_hospede
+from .views import cadastrar_usuario, home, perfil_hospede
 
 urlpatterns = [
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
     path('token-autenticacao/', obtain_auth_token),
     path('cadastro/', cadastrar_usuario),

@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospedaria</title>
+  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Hospedaria</p>
+        <h1>Escolha uma opcao</h1>
+      </div>
+      <div class="actions">
+        {% if request.user.is_authenticated %}
+          <a class="button" href="{% url 'usuarios:perfil_usuario' %}">Perfil</a>
+          <a class="button danger" href="{% url 'usuarios:logout_usuario' %}">Sair</a>
+        {% else %}
+          <a class="button" href="{% url 'usuarios:login_usuario' %}">Login</a>
+          <a class="button primary" href="{% url 'usuarios:cadastro_usuario' %}">Cadastro</a>
+        {% endif %}
+      </div>
+    </header>
+
+    <section class="grid">
+      <a class="card home-link" href="{% url 'hospedagens:hospedagens_lista' %}">
+        <h2>Hospedagens</h2>
+        <p class="description">Gerencie os anuncios, valores, enderecos e comodidades.</p>
+      </a>
+
+      <a class="card home-link" href="{% url 'enderecos:enderecos_lista' %}">
+        <h2>Enderecos</h2>
+        <p class="description">Cadastre os enderecos usados pelas hospedagens.</p>
+      </a>
+
+      <a class="card home-link" href="{% url 'comodidades:comodidades_lista' %}">
+        <h2>Comodidades</h2>
+        <p class="description">Controle os recursos oferecidos nas hospedagens.</p>
+      </a>
+
+      <a class="card home-link" href="{% url 'reservas:reservas_lista' %}">
+        <h2>Reservas</h2>
+        <p class="description">Acompanhe check-in, check-out, status e valores.</p>
+      </a>
+
+      <a class="card home-link" href="{% url 'pagamentos:pagamentos_lista' %}">
+        <h2>Pagamentos</h2>
+        <p class="description">Registre e acompanhe pagamentos das reservas.</p>
+      </a>
+
+      <a class="card home-link" href="{% url 'mensagens:mensagens_lista' %}">
+        <h2>Mensagens</h2>
+        <p class="description">Veja contatos e mensagens enviadas pelos hospedes.</p>
+      </a>
+
+      <a class="card home-link" href="{% url 'avaliacoes:avaliacoes_lista' %}">
+        <h2>Avaliacoes</h2>
+        <p class="description">Consulte notas e comentarios das hospedagens.</p>
+      </a>
+    </section>
+  </main>
+</body>
+</html>

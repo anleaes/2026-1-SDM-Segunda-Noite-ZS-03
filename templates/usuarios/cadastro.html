@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
+</head>
+<body>
+  <main class="page narrow">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Hospedaria</p>
+        <h1>Criar cadastro</h1>
+      </div>
+      <a class="button" href="{% url 'usuarios:login_usuario' %}">Ja tenho conta</a>
+    </header>
+
+    {% if messages %}
+      <section class="messages">
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <form class="form-card" method="post">
+      {% csrf_token %}
+
+      {% for field in form %}
+        <div class="field field-{{ field.name }}">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% for error in field.errors %}
+            <p class="error">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      {% if form.non_field_errors %}
+        <div class="error-box">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <button class="button primary full" type="submit">Cadastrar</button>
+    </form>
+  </main>
+
+  <script src="{% static 'js/usuarios.js' %}"></script>
+</body>
+</html>
