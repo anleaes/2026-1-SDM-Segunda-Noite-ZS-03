@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservas</title>
+  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Hospedaria</p>
+        <h1>Reservas</h1>
+      </div>
+      <a class="button primary" href="{% url 'reservas:reserva_criar' %}">Nova reserva</a>
+    </header>
+
+    {% if messages %}
+      <section class="messages">
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <section class="grid">
+      {% for reserva in reservas %}
+        <article class="card">
+          <div class="card-header">
+            <h2>Reserva {{ reserva.id }}</h2>
+            <span class="badge">{{ reserva.get_status_display }}</span>
+          </div>
+
+          <p class="description">
+            {{ reserva.hospede }} em {{ reserva.hospedagem.titulo }}
+          </p>
+
+          <dl class="details">
+            <div>
+              <dt>Check-in</dt>
+              <dd>{{ reserva.data_checkin|date:"d/m/Y" }}</dd>
+            </div>
+            <div>
+              <dt>Check-out</dt>
+              <dd>{{ reserva.data_checkout|date:"d/m/Y" }}</dd>
+            </div>
+            <div>
+              <dt>Hospedes</dt>
+              <dd>{{ reserva.quantidade_hospedes }}</dd>
+            </div>
+            <div>
+              <dt>Total</dt>
+              <dd>R$ {{ reserva.valor_total }}</dd>
+            </div>
+          </dl>
+
+          <p class="meta">
+            <strong>Criada em:</strong>
+            {{ reserva.criada_em|date:"d/m/Y H:i" }}
+          </p>
+
+          <div class="actions">
+            <a class="button" href="{% url 'reservas:reserva_editar' reserva.id %}">Editar</a>
+            <form class="delete-form" method="post" action="{% url 'reservas:reserva_excluir' reserva.id %}">
+              {% csrf_token %}
+              <button class="button danger" type="submit">Excluir</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty">
+          <h2>Nenhuma reserva cadastrada</h2>
+          <p>Crie a primeira reserva para visualizar os registros aqui.</p>
+        </div>
+      {% endfor %}
+    </section>
+  </main>
+
+  <script src="{% static 'js/reservas.js' %}"></script>
+</body>
+</html>
