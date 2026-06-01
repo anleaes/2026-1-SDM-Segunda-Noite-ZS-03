@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospedagens</title>
+  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Hospedaria</p>
+        <h1>Hospedagens</h1>
+      </div>
+      <a class="button primary" href="{% url 'hospedagens:hospedagem_criar' %}">Nova hospedagem</a>
+    </header>
+
+    {% if messages %}
+      <section class="messages">
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <section class="grid">
+      {% for hospedagem in hospedagens %}
+        <article class="card">
+          <div class="card-header">
+            <h2>{{ hospedagem.titulo }}</h2>
+            <span class="badge">{{ hospedagem.get_tipo_display }}</span>
+          </div>
+
+          <p class="description">{{ hospedagem.descricao }}</p>
+
+          <dl class="details">
+            <div>
+              <dt>Diaria</dt>
+              <dd>R$ {{ hospedagem.preco_diaria }}</dd>
+            </div>
+            <div>
+              <dt>Capacidade</dt>
+              <dd>{{ hospedagem.capacidade }}</dd>
+            </div>
+            <div>
+              <dt>Quartos</dt>
+              <dd>{{ hospedagem.quartos }}</dd>
+            </div>
+            <div>
+              <dt>Banheiros</dt>
+              <dd>{{ hospedagem.banheiros }}</dd>
+            </div>
+          </dl>
+
+          <p class="meta">
+            <strong>Endereco:</strong>
+            {{ hospedagem.endereco }}
+          </p>
+
+          <p class="meta">
+            <strong>Comodidades:</strong>
+            {% for comodidade in hospedagem.comodidades.all %}
+              {{ comodidade.nome }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+              Nenhuma
+            {% endfor %}
+          </p>
+
+          <div class="actions">
+            <a class="button" href="{% url 'hospedagens:hospedagem_editar' hospedagem.id %}">Editar</a>
+            <form class="delete-form" method="post" action="{% url 'hospedagens:hospedagem_excluir' hospedagem.id %}">
+              {% csrf_token %}
+              <button class="button danger" type="submit">Excluir</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty">
+          <h2>Nenhuma hospedagem cadastrada</h2>
+          <p>Crie a primeira hospedagem para visualizar os registros aqui.</p>
+        </div>
+      {% endfor %}
+    </section>
+  </main>
+
+  <script src="{% static 'js/hospedagens.js' %}"></script>
+</body>
+</html>
