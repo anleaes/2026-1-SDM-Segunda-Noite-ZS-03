@@ -93,12 +93,35 @@ WSGI_APPLICATION = 'hospedaria.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
+DB_WALLET_LOCATION = config(
+    'DB_WALLET_LOCATION',
+    default=os.path.join(BASE_DIR, 'oracle_wallet'),
+)
+os.environ.setdefault('TNS_ADMIN', DB_WALLET_LOCATION)
+
+ORACLE_OPTIONS = {
+    'config_dir': DB_WALLET_LOCATION,
+    'wallet_location': DB_WALLET_LOCATION,
+    'disable_oob': True,
+    'tcp_connect_timeout': 10,
+}
+
+DB_WALLET_PASSWORD = config('DB_WALLET_PASSWORD', default='')
+if DB_WALLET_PASSWORD:
+    ORACLE_OPTIONS['wallet_password'] = DB_WALLET_PASSWORD
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.oracle',
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        # DB_NAME deve corresponder a um alias do arquivo oracle_wallet/tnsnames.ora.
+        'NAME': config('DB_NAME', default='zjddmae7vgnz3ao9_high'),
+        'HOST': '',
+        'PORT': '',
+        'OPTIONS': ORACLE_OPTIONS,
     }
 }
 
