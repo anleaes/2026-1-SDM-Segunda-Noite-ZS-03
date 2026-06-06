@@ -8,6 +8,11 @@ from .forms import ReservaForm
 from .models import Reserva
 from .serializer import ReservaSerializer
 
+
+def tipo_usuario(request):
+    return request.session.get("tipo_usuario")
+
+
 class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.select_related("hospedagem", "hospede").all().order_by("id")
     serializer_class = ReservaSerializer
@@ -26,7 +31,7 @@ def reservas_lista(request):
     return render(
         request,
         "reservas/reservas_lista.html",
-        {"reservas": reservas},
+        {"reservas": reservas, "tipo_usuario": tipo_usuario(request)},
     )
 
 
@@ -38,7 +43,11 @@ def reserva_criar(request):
             messages.success(request, "Reserva criada com sucesso.")
             return redirect("reservas:reservas_lista")
     else:
-        form = ReservaForm()
+        initial = {}
+        hospedagem_id = request.GET.get("hospedagem")
+        if hospedagem_id:
+            initial["hospedagem"] = hospedagem_id
+        form = ReservaForm(initial=initial)
 
     return render(
         request,

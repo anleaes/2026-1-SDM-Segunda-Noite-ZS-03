@@ -55,11 +55,13 @@
           </dl>
 
           <div class="actions">
-            <a class="button" href="{% url 'avaliacoes:avaliacao_editar' avaliacao.id %}">Editar</a>
-            <form class="delete-form" method="post" action="{% url 'avaliacoes:avaliacao_excluir' avaliacao.id %}">
-              {% csrf_token %}
-              <button class="button danger" type="submit">Excluir</button>
-            </form>
+            {% if tipo_usuario != "anfitriao" %}
+              <a class="button" href="{% url 'avaliacoes:avaliacao_editar' avaliacao.id %}">Editar</a>
+              <form class="delete-form" method="post" action="{% url 'avaliacoes:avaliacao_excluir' avaliacao.id %}">
+                {% csrf_token %}
+                <button class="button danger" type="submit">Excluir</button>
+              </form>
+            {% endif %}
           </div>
         </article>
       {% empty %}

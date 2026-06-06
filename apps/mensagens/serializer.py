@@ -14,6 +14,8 @@ class MensagemSerializer(serializers.ModelSerializer):
             "telefone",
             "assunto",
             "mensagem",
+            "resposta",
             "lida",
             "enviada_em",
+            "respondida_em",
         ]

@@ -25,6 +25,11 @@
         <a class="button" href="{% url 'hospedagens:hospedagens_lista' %}">Hospedagens</a>
         <a class="button" href="{% url 'reservas:reservas_lista' %}">Reservas</a>
         <a class="button" href="{% url 'mensagens:mensagens_lista' %}">Mensagens</a>
+        <a class="button" href="{% url 'avaliacoes:avaliacoes_lista' %}">Avaliacoes</a>
+        {% if tipo_usuario == "anfitriao" %}
+          <a class="button" href="{% url 'comodidades:comodidades_lista' %}">Comodidades</a>
+          <a class="button" href="{% url 'enderecos:enderecos_lista' %}">Enderecos</a>
+        {% endif %}
       </div>
     </article>
   </main>

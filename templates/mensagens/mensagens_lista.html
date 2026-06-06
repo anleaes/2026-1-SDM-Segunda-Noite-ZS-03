@@ -59,7 +59,15 @@
             {{ mensagem.hospedagem.titulo }}
           </p>
 
+          {% if mensagem.resposta %}
+            <p class="meta">
+              <strong>Resposta:</strong>
+              {{ mensagem.resposta }}
+            </p>
+          {% endif %}
+
           <div class="actions">
+            <a class="button primary" href="{% url 'mensagens:mensagem_responder' mensagem.id %}">Responder</a>
             <a class="button" href="{% url 'mensagens:mensagem_editar' mensagem.id %}">Editar</a>
             <form class="delete-form" method="post" action="{% url 'mensagens:mensagem_excluir' mensagem.id %}">
               {% csrf_token %}

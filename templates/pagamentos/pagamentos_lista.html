@@ -57,6 +57,7 @@
           </dl>
 
           <div class="actions">
+            <a class="button primary" href="{% url 'avaliacoes:avaliacao_criar' %}?hospedagem={{ pagamento.reserva.hospedagem_id }}">Avaliar</a>
             <a class="button" href="{% url 'pagamentos:pagamento_editar' pagamento.id %}">Editar</a>
             <form class="delete-form" method="post" action="{% url 'pagamentos:pagamento_excluir' pagamento.id %}">
               {% csrf_token %}

@@ -14,7 +14,9 @@
         <p class="eyebrow">Hospedaria</p>
         <h1>Hospedagens</h1>
       </div>
-      <a class="button primary" href="{% url 'hospedagens:hospedagem_criar' %}">Nova hospedagem</a>
+      {% if tipo_usuario != "hospede" %}
+        <a class="button primary" href="{% url 'hospedagens:hospedagem_criar' %}">Nova hospedagem</a>
+      {% endif %}
     </header>
 
     {% if messages %}
@@ -69,11 +71,15 @@
           </p>
 
           <div class="actions">
-            <a class="button" href="{% url 'hospedagens:hospedagem_editar' hospedagem.id %}">Editar</a>
-            <form class="delete-form" method="post" action="{% url 'hospedagens:hospedagem_excluir' hospedagem.id %}">
-              {% csrf_token %}
-              <button class="button danger" type="submit">Excluir</button>
-            </form>
+            {% if tipo_usuario == "hospede" %}
+              <a class="button primary" href="{% url 'reservas:reserva_criar' %}?hospedagem={{ hospedagem.id }}">Reservar</a>
+            {% else %}
+              <a class="button" href="{% url 'hospedagens:hospedagem_editar' hospedagem.id %}">Editar</a>
+              <form class="delete-form" method="post" action="{% url 'hospedagens:hospedagem_excluir' hospedagem.id %}">
+                {% csrf_token %}
+                <button class="button danger" type="submit">Excluir</button>
+              </form>
+            {% endif %}
           </div>
         </article>
       {% empty %}

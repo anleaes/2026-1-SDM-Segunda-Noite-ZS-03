@@ -9,6 +9,10 @@ from .models import Pagamento
 from .serializer import PagamentoSerializer
 
 
+def tipo_usuario(request):
+    return request.session.get("tipo_usuario")
+
+
 class PagamentoViewSet(viewsets.ModelViewSet):
     queryset = (
         Pagamento.objects
@@ -32,7 +36,7 @@ def pagamentos_lista(request):
     return render(
         request,
         "pagamentos/pagamentos_lista.html",
-        {"pagamentos": pagamentos},
+        {"pagamentos": pagamentos, "tipo_usuario": tipo_usuario(request)},
     )
 
 
@@ -44,7 +48,11 @@ def pagamento_criar(request):
             messages.success(request, "Pagamento criado com sucesso.")
             return redirect("pagamentos:pagamentos_lista")
     else:
-        form = PagamentoForm()
+        initial = {}
+        reserva_id = request.GET.get("reserva")
+        if reserva_id:
+            initial["reserva"] = reserva_id
+        form = PagamentoForm(initial=initial)
 
     return render(
         request,

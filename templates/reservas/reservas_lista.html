@@ -62,6 +62,7 @@
           </p>
 
           <div class="actions">
+            <a class="button primary" href="{% url 'pagamentos:pagamento_criar' %}?reserva={{ reserva.id }}">Pagar</a>
             <a class="button" href="{% url 'reservas:reserva_editar' reserva.id %}">Editar</a>
             <form class="delete-form" method="post" action="{% url 'reservas:reserva_excluir' reserva.id %}">
               {% csrf_token %}

@@ -13,5 +13,6 @@ urlpatterns = [
     path("novo/", views.mensagem_criar, name="mensagem_criar"),
     path("editar/<int:id>/", views.mensagem_editar, name="mensagem_editar"),
     path("excluir/<int:id>/", views.mensagem_excluir, name="mensagem_excluir"),
+    path("responder/<int:id>/", views.mensagem_responder, name="mensagem_responder"),
     path("", include(router.urls)),
 ]

@@ -27,6 +27,11 @@ class Mensagem(models.Model):
     mensagem = models.TextField(
         verbose_name="Mensagem",
     )
+    resposta = models.TextField(
+        verbose_name="Resposta",
+        blank=True,
+        null=True,
+    )
     lida = models.BooleanField(
         verbose_name="Lida",
         default=False,
@@ -34,6 +39,11 @@ class Mensagem(models.Model):
     enviada_em = models.DateTimeField(
         verbose_name="Enviada em",
         auto_now_add=True,
+    )
+    respondida_em = models.DateTimeField(
+        verbose_name="Respondida em",
+        blank=True,
+        null=True,
     )
 
     class Meta:
