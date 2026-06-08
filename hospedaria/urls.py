@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
-from .views import cadastrar_usuario, home, perfil_hospede
+from .views import cadastrar_usuario, home, perfil_hospede, perfil_login_usuario
 
 urlpatterns = [
     path('', home, name='home'),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('token-autenticacao/', obtain_auth_token),
     path('cadastro/', cadastrar_usuario),
     path('perfil-hospede/', perfil_hospede),
+    path('perfil-login/', perfil_login_usuario),
     path('usuarios/', include('usuarios.urls', namespace='usuarios')),
     path('enderecos/', include('enderecos.urls', namespace='enderecos')),
     path('comodidades/', include('comodidades.urls', namespace='comodidades')),

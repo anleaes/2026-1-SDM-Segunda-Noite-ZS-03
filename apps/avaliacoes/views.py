@@ -4,6 +4,8 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+from usuarios.permissoes import EhHospedeOuLeitura
+
 from .forms import AvaliacaoForm
 from .models import Avaliacao
 from .serializer import AvaliacaoSerializer
@@ -21,7 +23,7 @@ class AvaliacaoViewSet(viewsets.ModelViewSet):
     queryset = Avaliacao.objects.all().order_by("id")
     serializer_class = AvaliacaoSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, EhHospedeOuLeitura]
 
 
 def avaliacoes_lista(request):
