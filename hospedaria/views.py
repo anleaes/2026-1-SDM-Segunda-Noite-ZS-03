@@ -7,28 +7,15 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from hospedes.models import Hospede
+from usuarios.auth_perfil import (
+    TIPOS_LOGIN,
+    perfil_login,
+    perfil_por_tipo,
+)
 
 
 def home(request):
     return render(request, "home.html")
-
-
-def obter_ou_criar_hospede(usuario):
-    email = usuario.email or f"{usuario.username}@email.local"
-    hospede = Hospede.objects.filter(email=email).first()
-
-    if hospede:
-        return hospede
-
-    return Hospede.objects.create(
-        nome=usuario.username,
-        email=email,
-        telefone="Nao informado",
-        documento=f"user-{usuario.id}",
-        nacionalidade="Nao informada",
-        data_nascimento="2000-01-01",
-    )
 
 
 @api_view(["POST"])
@@ -39,9 +26,15 @@ def cadastrar_usuario(request):
     email = request.data.get("email", "")
     tipo_login = request.data.get("tipo_login")
 
-    if not username or not password:
+    if not username or not password or not tipo_login:
         return Response(
-            {"erro": "Informe usuario e senha."},
+            {"erro": "Informe usuario, senha e tipo de login."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    if tipo_login not in TIPOS_LOGIN:
+        return Response(
+            {"erro": "Tipo de login invalido."},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
@@ -57,16 +50,24 @@ def cadastrar_usuario(request):
         email=email,
     )
     token, _ = Token.objects.get_or_create(user=usuario)
+    perfil = perfil_por_tipo(usuario, tipo_login)
 
-    if tipo_login == "hospede":
-        obter_ou_criar_hospede(usuario)
-
-    return Response({"token": token.key}, status=status.HTTP_201_CREATED)
+    return Response(
+        {"token": token.key, **perfil},
+        status=status.HTTP_201_CREATED,
+    )
 
 
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def perfil_hospede(request):
-    hospede = obter_ou_criar_hospede(request.user)
-    return Response({"id": hospede.id})
+    perfil = perfil_por_tipo(request.user, "hospede")
+    return Response({"id": perfil["hospede_id"]})
+
+
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def perfil_login_usuario(request):
+    return Response(perfil_login(request.user))
