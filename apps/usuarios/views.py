@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from rest_framework import viewsets
@@ -32,7 +31,7 @@ def login_usuario(request):
             if user is not None:
                 login(request, user)
                 request.session["tipo_usuario"] = tipo_usuario
-                return redirect("usuarios:perfil_usuario")
+                return redirect("home")
 
             messages.error(request, "Usuario ou senha invalidos.")
     else:
@@ -90,20 +89,11 @@ def cadastro_usuario(request):
                 login(request, user)
                 request.session["tipo_usuario"] = form.cleaned_data["tipo_usuario"]
                 messages.success(request, "Cadastro criado com sucesso.")
-                return redirect("usuarios:perfil_usuario")
+                return redirect("home")
     else:
         form = CadastroForm()
 
     return render(request, "usuarios/cadastro.html", {"form": form})
-
-
-@login_required(login_url="/usuarios/login/")
-def perfil_usuario(request):
-    return render(
-        request,
-        "usuarios/perfil.html",
-        {"tipo_usuario": request.session.get("tipo_usuario")},
-    )
 
 
 def logout_usuario(request):

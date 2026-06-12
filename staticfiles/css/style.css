@@ -9,7 +9,7 @@ body {
 header {
   background-color: #5587dc;
   color: #fff;
-  padding: 10px 20px;
+  padding: 2px 20px;
 }
 
 h1 {
@@ -82,14 +82,12 @@ li .nav-item:hover {
 
 .container {
   box-sizing: border-box;
-  margin: 0 auto;
   padding: 0;
 }
 
 .home {
   background-color: #5e89d5;
-  padding: 50px 20px;
-  text-align: center;
+  padding: 12px 20px;
 }
 
 .home h1 {

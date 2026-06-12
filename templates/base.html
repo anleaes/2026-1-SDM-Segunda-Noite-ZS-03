@@ -31,7 +31,6 @@
               <li><a class="nav-item" href="{% url 'comodidades:comodidades_lista' %}">Comodidades</a></li>
             {% endif %}
 
-            <li><a class="nav-item" href="{% url 'usuarios:perfil_usuario' %}">Meu Perfil</a></li>
             <li>
               <form method="post" action="{% url 'usuarios:logout_usuario' %}" class="logout-form">
                 {% csrf_token %}
