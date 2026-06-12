@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}Hospedaria{% endblock title %}</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo">
+          <a href="{% url 'home' %}">Hospedaria</a>
+        </div>
+
+        <ul class="nav-links">
+          <li><a class="nav-item" href="{% url 'home' %}">Inicio</a></li>
+          <li><a class="nav-item" href="{% url 'hospedagens:hospedagens_lista' %}">Hospedagens</a></li>
+
+          {% if user.is_authenticated %}
+            <li><a class="nav-item" href="{% url 'reservas:reservas_lista' %}">Reservas</a></li>
+            <li><a class="nav-item" href="{% url 'pagamentos:pagamentos_lista' %}">Pagamentos</a></li>
+            <li><a class="nav-item" href="{% url 'mensagens:mensagens_lista' %}">Mensagens</a></li>
+            <li><a class="nav-item" href="{% url 'avaliacoes:avaliacoes_lista' %}">Avaliacoes</a></li>
+
+            {% if is_anfitriao %}
+              <li><a class="nav-item" href="{% url 'enderecos:enderecos_lista' %}">Enderecos</a></li>
+              <li><a class="nav-item" href="{% url 'comodidades:comodidades_lista' %}">Comodidades</a></li>
+            {% endif %}
+
+            <li><a class="nav-item" href="{% url 'usuarios:perfil_usuario' %}">Meu Perfil</a></li>
+            <li>
+              <form method="post" action="{% url 'usuarios:logout_usuario' %}" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="btn-logout">Sair</button>
+              </form>
+            </li>
+          {% else %}
+            <li><a href="{% url 'usuarios:login_usuario' %}" class="btn-primario nav-button">Entrar</a></li>
+            <li><a href="{% url 'usuarios:cadastro_usuario' %}" class="btn-secundario nav-button">Cadastrar</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+
+    {% if messages %}
+      <div class="site-messages">
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block body %}
+    {% endblock body %}
+  </body>
+</html>
