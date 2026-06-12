@@ -1,78 +1,62 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Avaliacoes</title>
-  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
-</head>
-<body>
-  <main class="page">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">Hospedaria</p>
-        <h1>Avaliacoes</h1>
-      </div>
-      <a class="button primary" href="{% url 'avaliacoes:avaliacao_criar' %}">Nova avaliacao</a>
-    </header>
 
-    {% if messages %}
-      <section class="messages">
-        {% for message in messages %}
-          <p class="message {{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </section>
-    {% endif %}
+{% block title %}Avaliacoes{% endblock title %}
 
-    <section class="grid">
+{% block body %}
+<div class="lista-container">
+  <div class="section-header">
+    <h2>Lista de Avaliacoes</h2>
+    <a class="btn-primario" href="{% url 'avaliacoes:avaliacao_criar' %}">+ Nova avaliacao</a>
+  </div>
+
+  <p>Abaixo estao listadas as avaliacoes das hospedagens.</p>
+
+  <table class="tabela-lista">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Hospedagem</th>
+        <th>Hospede</th>
+        <th>Email</th>
+        <th>Nota</th>
+        <th>Comentario</th>
+        <th>Data</th>
+        <th>Acoes</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for avaliacao in avaliacoes %}
-        <article class="card">
-          <div class="card-header">
-            <h2>{{ avaliacao.nome_hospede }}</h2>
-            <span class="badge">Nota {{ avaliacao.nota }}</span>
-          </div>
-
-          <p class="description">{{ avaliacao.comentario|default:"Sem comentario." }}</p>
-
-          <dl class="details">
-            <div>
-              <dt>Hospedagem</dt>
-              <dd>{{ avaliacao.hospedagem.titulo }}</dd>
+        <tr>
+          <td>#{{ avaliacao.id }}</td>
+          <td>{{ avaliacao.hospedagem.titulo }}</td>
+          <td>{{ avaliacao.nome_hospede }}</td>
+          <td>{{ avaliacao.email }}</td>
+          <td>{{ avaliacao.nota }}/5</td>
+          <td>{{ avaliacao.comentario|default:"Sem comentario."|truncatechars:80 }}</td>
+          <td>{{ avaliacao.data_avaliacao|date:"d/m/Y H:i" }}</td>
+          <td>
+            <div class="acoes-tabela">
+              {% if tipo_usuario != "anfitriao" %}
+                <a class="btn-lista" href="{% url 'avaliacoes:avaliacao_editar' avaliacao.id %}">Editar</a>
+                <form class="delete-form" method="post" action="{% url 'avaliacoes:avaliacao_excluir' avaliacao.id %}">
+                  {% csrf_token %}
+                  <button class="btn-lista btn-excluir" type="submit">Excluir</button>
+                </form>
+              {% else %}
+                <span class="status-badge">Leitura</span>
+              {% endif %}
             </div>
-            <div>
-              <dt>Email</dt>
-              <dd>{{ avaliacao.email }}</dd>
-            </div>
-            <div>
-              <dt>Data</dt>
-              <dd>{{ avaliacao.data_avaliacao|date:"d/m/Y H:i" }}</dd>
-            </div>
-            <div>
-              <dt>Nota</dt>
-              <dd>{{ avaliacao.nota }}/5</dd>
-            </div>
-          </dl>
-
-          <div class="actions">
-            {% if tipo_usuario != "anfitriao" %}
-              <a class="button" href="{% url 'avaliacoes:avaliacao_editar' avaliacao.id %}">Editar</a>
-              <form class="delete-form" method="post" action="{% url 'avaliacoes:avaliacao_excluir' avaliacao.id %}">
-                {% csrf_token %}
-                <button class="button danger" type="submit">Excluir</button>
-              </form>
-            {% endif %}
-          </div>
-        </article>
+          </td>
+        </tr>
       {% empty %}
-        <div class="empty">
-          <h2>Nenhuma avaliacao cadastrada</h2>
-          <p>Crie a primeira avaliacao para visualizar os registros aqui.</p>
-        </div>
+        <tr>
+          <td class="empty-row" colspan="8">Nenhuma avaliacao cadastrada.</td>
+        </tr>
       {% endfor %}
-    </section>
-  </main>
+    </tbody>
+  </table>
+</div>
 
-  <script src="{% static 'js/avaliacoes.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'js/avaliacoes.js' %}"></script>
+{% endblock body %}

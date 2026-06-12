@@ -1,74 +1,56 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enderecos</title>
-  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
-</head>
-<body>
-  <main class="page">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">Hospedaria</p>
-        <h1>Enderecos</h1>
-      </div>
-      <a class="button primary" href="{% url 'enderecos:endereco_criar' %}">Novo endereco</a>
-    </header>
 
-    {% if messages %}
-      <section class="messages">
-        {% for message in messages %}
-          <p class="message {{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </section>
-    {% endif %}
+{% block title %}Enderecos{% endblock title %}
 
-    <section class="grid">
+{% block body %}
+<div class="lista-container">
+  <div class="section-header">
+    <h2>Lista de Enderecos</h2>
+    <a class="btn-primario" href="{% url 'enderecos:endereco_criar' %}">+ Novo endereco</a>
+  </div>
+
+  <p>Abaixo estao listados os enderecos usados pelas hospedagens.</p>
+
+  <table class="tabela-lista">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Logradouro</th>
+        <th>Bairro</th>
+        <th>Cidade/UF</th>
+        <th>CEP</th>
+        <th>Complemento</th>
+        <th>Acoes</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for endereco in enderecos %}
-        <article class="card">
-          <div class="card-header">
-            <h2>{{ endereco.logradouro }}, {{ endereco.numero }}</h2>
-            <span class="badge">{{ endereco.estado }}</span>
-          </div>
-
-          <dl class="details">
-            <div>
-              <dt>Bairro</dt>
-              <dd>{{ endereco.bairro }}</dd>
+        <tr>
+          <td>#{{ endereco.id }}</td>
+          <td>{{ endereco.logradouro }}, {{ endereco.numero }}</td>
+          <td>{{ endereco.bairro }}</td>
+          <td>{{ endereco.cidade }}/{{ endereco.estado }}</td>
+          <td>{{ endereco.cep }}</td>
+          <td>{{ endereco.complemento|default:"-" }}</td>
+          <td>
+            <div class="acoes-tabela">
+              <a class="btn-lista" href="{% url 'enderecos:endereco_editar' endereco.id %}">Editar</a>
+              <form class="delete-form" method="post" action="{% url 'enderecos:endereco_excluir' endereco.id %}">
+                {% csrf_token %}
+                <button class="btn-lista btn-excluir" type="submit">Excluir</button>
+              </form>
             </div>
-            <div>
-              <dt>Cidade</dt>
-              <dd>{{ endereco.cidade }}</dd>
-            </div>
-            <div>
-              <dt>CEP</dt>
-              <dd>{{ endereco.cep }}</dd>
-            </div>
-            <div>
-              <dt>Complemento</dt>
-              <dd>{{ endereco.complemento|default:"-" }}</dd>
-            </div>
-          </dl>
-
-          <div class="actions">
-            <a class="button" href="{% url 'enderecos:endereco_editar' endereco.id %}">Editar</a>
-            <form class="delete-form" method="post" action="{% url 'enderecos:endereco_excluir' endereco.id %}">
-              {% csrf_token %}
-              <button class="button danger" type="submit">Excluir</button>
-            </form>
-          </div>
-        </article>
+          </td>
+        </tr>
       {% empty %}
-        <div class="empty">
-          <h2>Nenhum endereco cadastrado</h2>
-          <p>Crie o primeiro endereco para visualizar os registros aqui.</p>
-        </div>
+        <tr>
+          <td class="empty-row" colspan="7">Nenhum endereco cadastrado.</td>
+        </tr>
       {% endfor %}
-    </section>
-  </main>
+    </tbody>
+  </table>
+</div>
 
-  <script src="{% static 'js/enderecos.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'js/enderecos.js' %}"></script>
+{% endblock body %}

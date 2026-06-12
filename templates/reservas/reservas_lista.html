@@ -1,84 +1,59 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reservas</title>
-  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
-</head>
-<body>
-  <main class="page">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">Hospedaria</p>
-        <h1>Reservas</h1>
-      </div>
-      <a class="button primary" href="{% url 'reservas:reserva_criar' %}">Nova reserva</a>
-    </header>
 
-    {% if messages %}
-      <section class="messages">
-        {% for message in messages %}
-          <p class="message {{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </section>
-    {% endif %}
+{% block title %}Reservas{% endblock title %}
 
-    <section class="grid">
+{% block body %}
+<div class="lista-container">
+  <div class="section-header">
+    <h2>Lista de Reservas</h2>
+    <a class="btn-primario" href="{% url 'reservas:reserva_criar' %}">+ Nova reserva</a>
+  </div>
+
+  <p>Abaixo estao listadas as reservas cadastradas.</p>
+
+  <table class="tabela-lista">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Hospede</th>
+        <th>Hospedagem</th>
+        <th>Check-in</th>
+        <th>Check-out</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th>Acoes</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for reserva in reservas %}
-        <article class="card">
-          <div class="card-header">
-            <h2>Reserva {{ reserva.id }}</h2>
-            <span class="badge">{{ reserva.get_status_display }}</span>
-          </div>
-
-          <p class="description">
-            {{ reserva.hospede }} em {{ reserva.hospedagem.titulo }}
-          </p>
-
-          <dl class="details">
-            <div>
-              <dt>Check-in</dt>
-              <dd>{{ reserva.data_checkin|date:"d/m/Y" }}</dd>
+        <tr>
+          <td>#{{ reserva.id }}</td>
+          <td>{{ reserva.hospede }}</td>
+          <td>{{ reserva.hospedagem.titulo }}</td>
+          <td>{{ reserva.data_checkin|date:"d/m/Y" }}</td>
+          <td>{{ reserva.data_checkout|date:"d/m/Y" }}</td>
+          <td><span class="status-badge">{{ reserva.get_status_display }}</span></td>
+          <td>R$ {{ reserva.valor_total }}</td>
+          <td>
+            <div class="acoes-tabela">
+              <a class="btn-lista" href="{% url 'pagamentos:pagamento_criar' %}?reserva={{ reserva.id }}">Pagar</a>
+              <a class="btn-lista" href="{% url 'reservas:reserva_editar' reserva.id %}">Editar</a>
+              <form class="delete-form" method="post" action="{% url 'reservas:reserva_excluir' reserva.id %}">
+                {% csrf_token %}
+                <button class="btn-lista btn-excluir" type="submit">Excluir</button>
+              </form>
             </div>
-            <div>
-              <dt>Check-out</dt>
-              <dd>{{ reserva.data_checkout|date:"d/m/Y" }}</dd>
-            </div>
-            <div>
-              <dt>Hospedes</dt>
-              <dd>{{ reserva.quantidade_hospedes }}</dd>
-            </div>
-            <div>
-              <dt>Total</dt>
-              <dd>R$ {{ reserva.valor_total }}</dd>
-            </div>
-          </dl>
-
-          <p class="meta">
-            <strong>Criada em:</strong>
-            {{ reserva.criada_em|date:"d/m/Y H:i" }}
-          </p>
-
-          <div class="actions">
-            <a class="button primary" href="{% url 'pagamentos:pagamento_criar' %}?reserva={{ reserva.id }}">Pagar</a>
-            <a class="button" href="{% url 'reservas:reserva_editar' reserva.id %}">Editar</a>
-            <form class="delete-form" method="post" action="{% url 'reservas:reserva_excluir' reserva.id %}">
-              {% csrf_token %}
-              <button class="button danger" type="submit">Excluir</button>
-            </form>
-          </div>
-        </article>
+          </td>
+        </tr>
       {% empty %}
-        <div class="empty">
-          <h2>Nenhuma reserva cadastrada</h2>
-          <p>Crie a primeira reserva para visualizar os registros aqui.</p>
-        </div>
+        <tr>
+          <td class="empty-row" colspan="8">Nenhuma reserva cadastrada.</td>
+        </tr>
       {% endfor %}
-    </section>
-  </main>
+    </tbody>
+  </table>
+</div>
 
-  <script src="{% static 'js/reservas.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'js/reservas.js' %}"></script>
+{% endblock body %}

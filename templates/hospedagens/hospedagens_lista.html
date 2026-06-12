@@ -1,96 +1,73 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hospedagens</title>
-  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
-</head>
-<body>
-  <main class="page">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">Hospedaria</p>
-        <h1>Hospedagens</h1>
-      </div>
-      {% if tipo_usuario != "hospede" %}
-        <a class="button primary" href="{% url 'hospedagens:hospedagem_criar' %}">Nova hospedagem</a>
-      {% endif %}
-    </header>
 
-    {% if messages %}
-      <section class="messages">
-        {% for message in messages %}
-          <p class="message {{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </section>
+{% block title %}Hospedagens{% endblock title %}
+
+{% block body %}
+<div class="lista-container">
+  <div class="section-header">
+    <h2>Lista de Hospedagens</h2>
+    {% if tipo_usuario != "hospede" %}
+      <a class="btn-primario" href="{% url 'hospedagens:hospedagem_criar' %}">+ Nova hospedagem</a>
     {% endif %}
+  </div>
 
-    <section class="grid">
+  <p>Abaixo estao listadas as hospedagens cadastradas no sistema.</p>
+
+  <table class="tabela-lista">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Titulo</th>
+        <th>Tipo</th>
+        <th>Diaria</th>
+        <th>Capacidade</th>
+        <th>Endereco</th>
+        <th>Comodidades</th>
+        <th>Acoes</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for hospedagem in hospedagens %}
-        <article class="card">
-          <div class="card-header">
-            <h2>{{ hospedagem.titulo }}</h2>
-            <span class="badge">{{ hospedagem.get_tipo_display }}</span>
-          </div>
-
-          <p class="description">{{ hospedagem.descricao }}</p>
-
-          <dl class="details">
-            <div>
-              <dt>Diaria</dt>
-              <dd>R$ {{ hospedagem.preco_diaria }}</dd>
-            </div>
-            <div>
-              <dt>Capacidade</dt>
-              <dd>{{ hospedagem.capacidade }}</dd>
-            </div>
-            <div>
-              <dt>Quartos</dt>
-              <dd>{{ hospedagem.quartos }}</dd>
-            </div>
-            <div>
-              <dt>Banheiros</dt>
-              <dd>{{ hospedagem.banheiros }}</dd>
-            </div>
-          </dl>
-
-          <p class="meta">
-            <strong>Endereco:</strong>
-            {{ hospedagem.endereco }}
-          </p>
-
-          <p class="meta">
-            <strong>Comodidades:</strong>
+        <tr>
+          <td>#{{ hospedagem.id }}</td>
+          <td>
+            <strong>{{ hospedagem.titulo }}</strong><br>
+            {{ hospedagem.descricao|truncatechars:80 }}
+          </td>
+          <td>{{ hospedagem.get_tipo_display }}</td>
+          <td>R$ {{ hospedagem.preco_diaria }}</td>
+          <td>{{ hospedagem.capacidade }} pessoas</td>
+          <td>{{ hospedagem.endereco }}</td>
+          <td>
             {% for comodidade in hospedagem.comodidades.all %}
               {{ comodidade.nome }}{% if not forloop.last %}, {% endif %}
             {% empty %}
               Nenhuma
             {% endfor %}
-          </p>
-
-          <div class="actions">
-            {% if tipo_usuario == "hospede" %}
-              <a class="button primary" href="{% url 'reservas:reserva_criar' %}?hospedagem={{ hospedagem.id }}">Reservar</a>
-            {% else %}
-              <a class="button" href="{% url 'hospedagens:hospedagem_editar' hospedagem.id %}">Editar</a>
-              <form class="delete-form" method="post" action="{% url 'hospedagens:hospedagem_excluir' hospedagem.id %}">
-                {% csrf_token %}
-                <button class="button danger" type="submit">Excluir</button>
-              </form>
-            {% endif %}
-          </div>
-        </article>
+          </td>
+          <td>
+            <div class="acoes-tabela">
+              {% if tipo_usuario == "hospede" %}
+                <a class="btn-lista" href="{% url 'reservas:reserva_criar' %}?hospedagem={{ hospedagem.id }}">Reservar</a>
+              {% else %}
+                <a class="btn-lista" href="{% url 'hospedagens:hospedagem_editar' hospedagem.id %}">Editar</a>
+                <form class="delete-form" method="post" action="{% url 'hospedagens:hospedagem_excluir' hospedagem.id %}">
+                  {% csrf_token %}
+                  <button class="btn-lista btn-excluir" type="submit">Excluir</button>
+                </form>
+              {% endif %}
+            </div>
+          </td>
+        </tr>
       {% empty %}
-        <div class="empty">
-          <h2>Nenhuma hospedagem cadastrada</h2>
-          <p>Crie a primeira hospedagem para visualizar os registros aqui.</p>
-        </div>
+        <tr>
+          <td class="empty-row" colspan="8">Nenhuma hospedagem cadastrada.</td>
+        </tr>
       {% endfor %}
-    </section>
-  </main>
+    </tbody>
+  </table>
+</div>
 
-  <script src="{% static 'js/hospedagens.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'js/hospedagens.js' %}"></script>
+{% endblock body %}

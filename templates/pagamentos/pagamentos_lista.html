@@ -1,79 +1,57 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagamentos</title>
-  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
-</head>
-<body>
-  <main class="page">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">Hospedaria</p>
-        <h1>Pagamentos</h1>
-      </div>
-      <a class="button primary" href="{% url 'pagamentos:pagamento_criar' %}">Novo pagamento</a>
-    </header>
 
-    {% if messages %}
-      <section class="messages">
-        {% for message in messages %}
-          <p class="message {{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </section>
-    {% endif %}
+{% block title %}Pagamentos{% endblock title %}
 
-    <section class="grid">
+{% block body %}
+<div class="lista-container">
+  <div class="section-header">
+    <h2>Lista de Pagamentos</h2>
+    <a class="btn-primario" href="{% url 'pagamentos:pagamento_criar' %}">+ Novo pagamento</a>
+  </div>
+
+  <p>Abaixo estao listados os pagamentos registrados.</p>
+
+  <table class="tabela-lista">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Reserva</th>
+        <th>Valor</th>
+        <th>Metodo</th>
+        <th>Status</th>
+        <th>Data de pagamento</th>
+        <th>Acoes</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for pagamento in pagamentos %}
-        <article class="card">
-          <div class="card-header">
-            <h2>Pagamento {{ pagamento.id }}</h2>
-            <span class="badge">{{ pagamento.get_status_display }}</span>
-          </div>
-
-          <p class="description">
-            Reserva {{ pagamento.reserva_id }} - R$ {{ pagamento.valor }}
-          </p>
-
-          <dl class="details">
-            <div>
-              <dt>Metodo</dt>
-              <dd>{{ pagamento.get_metodo_display }}</dd>
+        <tr>
+          <td>#{{ pagamento.id }}</td>
+          <td>Reserva {{ pagamento.reserva_id }}</td>
+          <td>R$ {{ pagamento.valor }}</td>
+          <td>{{ pagamento.get_metodo_display }}</td>
+          <td><span class="status-badge">{{ pagamento.get_status_display }}</span></td>
+          <td>{{ pagamento.data_pagamento|date:"d/m/Y H:i"|default:"-" }}</td>
+          <td>
+            <div class="acoes-tabela">
+              <a class="btn-lista" href="{% url 'avaliacoes:avaliacao_criar' %}?hospedagem={{ pagamento.reserva.hospedagem_id }}">Avaliar</a>
+              <a class="btn-lista" href="{% url 'pagamentos:pagamento_editar' pagamento.id %}">Editar</a>
+              <form class="delete-form" method="post" action="{% url 'pagamentos:pagamento_excluir' pagamento.id %}">
+                {% csrf_token %}
+                <button class="btn-lista btn-excluir" type="submit">Excluir</button>
+              </form>
             </div>
-            <div>
-              <dt>Status</dt>
-              <dd>{{ pagamento.get_status_display }}</dd>
-            </div>
-            <div>
-              <dt>Pagamento</dt>
-              <dd>{{ pagamento.data_pagamento|date:"d/m/Y H:i"|default:"-" }}</dd>
-            </div>
-            <div>
-              <dt>Criado em</dt>
-              <dd>{{ pagamento.criado_em|date:"d/m/Y H:i" }}</dd>
-            </div>
-          </dl>
-
-          <div class="actions">
-            <a class="button primary" href="{% url 'avaliacoes:avaliacao_criar' %}?hospedagem={{ pagamento.reserva.hospedagem_id }}">Avaliar</a>
-            <a class="button" href="{% url 'pagamentos:pagamento_editar' pagamento.id %}">Editar</a>
-            <form class="delete-form" method="post" action="{% url 'pagamentos:pagamento_excluir' pagamento.id %}">
-              {% csrf_token %}
-              <button class="button danger" type="submit">Excluir</button>
-            </form>
-          </div>
-        </article>
+          </td>
+        </tr>
       {% empty %}
-        <div class="empty">
-          <h2>Nenhum pagamento cadastrado</h2>
-          <p>Crie o primeiro pagamento para visualizar os registros aqui.</p>
-        </div>
+        <tr>
+          <td class="empty-row" colspan="7">Nenhum pagamento cadastrado.</td>
+        </tr>
       {% endfor %}
-    </section>
-  </main>
+    </tbody>
+  </table>
+</div>
 
-  <script src="{% static 'js/pagamentos.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'js/pagamentos.js' %}"></script>
+{% endblock body %}
