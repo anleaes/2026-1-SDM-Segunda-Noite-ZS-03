@@ -11,7 +11,5 @@ class AnfitriaoSerializer(serializers.ModelSerializer):
             "nome",
             "email",
             "telefone",
-            "documento",
-            "bio",
             "avaliacao_media",
         )

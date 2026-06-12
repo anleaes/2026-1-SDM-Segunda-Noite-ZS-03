@@ -3,42 +3,10 @@
 {% block title %}Hospedaria{% endblock title %}
 
 {% block body %}
-<main class="container">
-  <div class="home"></div>
-
-  <section class="lista-container">
-    <h2 style="text-align: center;">Modulos do sistema</h2>
-    <table class="tabela-lista">
-      <thead>
-        <tr>
-          <th>Modulo</th>
-          <th>Descricao</th>
-          <th>Acesso</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Hospedagens</td>
-          <td>Consulta de anuncios, valores, enderecos e comodidades.</td>
-          <td><a class="btn-lista" href="{% url 'hospedagens:hospedagens_lista' %}">Abrir</a></td>
-        </tr>
-        <tr>
-          <td>Reservas</td>
-          <td>Acompanhamento de check-in, check-out, status e valores.</td>
-          <td><a class="btn-lista" href="{% url 'reservas:reservas_lista' %}">Abrir</a></td>
-        </tr>
-        <tr>
-          <td>Pagamentos</td>
-          <td>Registro e acompanhamento de pagamentos das reservas.</td>
-          <td><a class="btn-lista" href="{% url 'pagamentos:pagamentos_lista' %}">Abrir</a></td>
-        </tr>
-        <tr>
-          <td>Mensagens</td>
-          <td>Contato entre hospedes e administracao da hospedaria.</td>
-          <td><a class="btn-lista" href="{% url 'mensagens:mensagens_lista' %}">Abrir</a></td>
-        </tr>
-      </tbody>
-    </table>
+<main class="container" style="min-height: calc(100vh - 56px); display: flex; align-items: center; justify-content: center;">
+  <section class="home-welcome" style="width: 100%; max-width: 900px; padding: 20px; text-align: center;">
+    <h2 style="font-size: 3rem; margin: 0 0 14px;">Bem-vindo!</h2>
+    <p style="font-size: 1.35rem; margin: 0;">Reserve uma hospedagem para sua pr&oacute;xima viagem!</p>
   </section>
 </main>
 {% endblock body %}

@@ -14,15 +14,6 @@ class Anfitriao(models.Model):
         verbose_name="Telefone",
         max_length=20,
     )
-    documento = models.CharField(
-        verbose_name="Documento",
-        max_length=20,
-    )
-    bio = models.TextField(
-        verbose_name="Biografia",
-        blank=True,
-        null=True,
-    )
     avaliacao_media = models.DecimalField(
         verbose_name="Avaliação Média",
         max_digits=3,

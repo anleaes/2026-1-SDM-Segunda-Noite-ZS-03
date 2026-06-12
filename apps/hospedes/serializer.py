@@ -12,6 +12,4 @@ class HospedeSerializer(serializers.ModelSerializer):
             "email",
             "telefone",
             "data_nascimento",
-            "nacionalidade",
-            "documento",
         ]

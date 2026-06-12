@@ -13,10 +13,6 @@ class Hospede(models.Model):
         verbose_name="Telefone",
         max_length=20,
     )
-    documento = models.CharField(
-        verbose_name="Documento",
-        max_length=20,
-    )
     nacionalidade = models.CharField(
         verbose_name="Nacionalidade",
         max_length=50,

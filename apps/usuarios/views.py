@@ -73,16 +73,12 @@ def cadastro_usuario(request):
                         nome=form.cleaned_data["nome"],
                         email=email,
                         telefone=form.cleaned_data["telefone"],
-                        documento=form.cleaned_data["documento"],
-                        bio=form.cleaned_data["bio"],
                     )
                 else:
                     Hospede.objects.create(
                         nome=form.cleaned_data["nome"],
                         email=email,
                         telefone=form.cleaned_data["telefone"],
-                        documento=form.cleaned_data["documento"],
-                        nacionalidade=form.cleaned_data["nacionalidade"] or "Nao informada",
                         data_nascimento=form.cleaned_data["data_nascimento"],
                     )
 

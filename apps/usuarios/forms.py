@@ -27,18 +27,7 @@ class CadastroForm(forms.Form):
     email = forms.EmailField(label="Email")
     telefone = forms.CharField(label="Telefone", max_length=20)
     cpf = forms.CharField(label="CPF", max_length=14)
-    documento = forms.CharField(label="Documento", max_length=20)
     data_nascimento = forms.DateField(
         label="Data de nascimento",
         widget=forms.DateInput(attrs={"type": "date"}),
-    )
-    nacionalidade = forms.CharField(
-        label="Nacionalidade",
-        max_length=50,
-        required=False,
-    )
-    bio = forms.CharField(
-        label="Biografia",
-        required=False,
-        widget=forms.Textarea(attrs={"rows": 4}),
     )
