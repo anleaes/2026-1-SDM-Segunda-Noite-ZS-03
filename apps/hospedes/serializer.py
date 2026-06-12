@@ -9,7 +9,6 @@ class HospedeSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "nome",
-            "sobrenome",
             "email",
             "telefone",
             "data_nascimento",
