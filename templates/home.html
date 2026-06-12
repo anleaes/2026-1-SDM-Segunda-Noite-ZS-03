@@ -1,66 +1,61 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hospedaria</title>
-  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
-</head>
-<body>
-  <main class="page">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">Hospedaria</p>
-        <h1>Escolha uma opcao</h1>
-      </div>
-      <div class="actions">
-        {% if request.user.is_authenticated %}
-          <a class="button" href="{% url 'usuarios:perfil_usuario' %}">Perfil</a>
-          <a class="button danger" href="{% url 'usuarios:logout_usuario' %}">Sair</a>
-        {% else %}
-          <a class="button" href="{% url 'usuarios:login_usuario' %}">Login</a>
-          <a class="button primary" href="{% url 'usuarios:cadastro_usuario' %}">Cadastro</a>
+{% extends 'base.html' %}
+
+{% block title %}Hospedaria{% endblock title %}
+
+{% block body %}
+<main class="container">
+  <div class="home">
+    <h1>Hospedaria</h1>
+    <h2>Reservas e hospedagens</h2>
+    <p class="slogan">Sistema para gerenciar hospedagens, reservas, pagamentos, mensagens e avaliacoes.</p>
+
+    <div class="acoes">
+      {% if user.is_authenticated %}
+        <a href="{% url 'usuarios:perfil_usuario' %}" class="btn-primario">Meu Perfil</a>
+        <a href="{% url 'hospedagens:hospedagens_lista' %}" class="btn-secundario">Ver Hospedagens</a>
+        {% if is_anfitriao %}
+          <a href="{% url 'reservas:reservas_lista' %}" class="btn-secundario">Gerenciar Reservas</a>
         {% endif %}
-      </div>
-    </header>
+      {% else %}
+        <a href="{% url 'usuarios:login_usuario' %}" class="btn-primario">Fazer Login</a>
+        <a href="{% url 'usuarios:cadastro_usuario' %}" class="btn-secundario">Cadastre-se</a>
+      {% endif %}
+    </div>
+  </div>
 
-    <section class="grid">
-      <a class="card home-link" href="{% url 'hospedagens:hospedagens_lista' %}">
-        <h2>Hospedagens</h2>
-        <p class="description">Gerencie os anuncios, valores, enderecos e comodidades.</p>
-      </a>
-
-      <a class="card home-link" href="{% url 'enderecos:enderecos_lista' %}">
-        <h2>Enderecos</h2>
-        <p class="description">Cadastre os enderecos usados pelas hospedagens.</p>
-      </a>
-
-      <a class="card home-link" href="{% url 'comodidades:comodidades_lista' %}">
-        <h2>Comodidades</h2>
-        <p class="description">Controle os recursos oferecidos nas hospedagens.</p>
-      </a>
-
-      <a class="card home-link" href="{% url 'reservas:reservas_lista' %}">
-        <h2>Reservas</h2>
-        <p class="description">Acompanhe check-in, check-out, status e valores.</p>
-      </a>
-
-      <a class="card home-link" href="{% url 'pagamentos:pagamentos_lista' %}">
-        <h2>Pagamentos</h2>
-        <p class="description">Registre e acompanhe pagamentos das reservas.</p>
-      </a>
-
-      <a class="card home-link" href="{% url 'mensagens:mensagens_lista' %}">
-        <h2>Mensagens</h2>
-        <p class="description">Veja contatos e mensagens enviadas pelos hospedes.</p>
-      </a>
-
-      <a class="card home-link" href="{% url 'avaliacoes:avaliacoes_lista' %}">
-        <h2>Avaliacoes</h2>
-        <p class="description">Consulte notas e comentarios das hospedagens.</p>
-      </a>
-    </section>
-  </main>
-</body>
-</html>
+  <section class="lista-container">
+    <h2 style="text-align: center;">Modulos do sistema</h2>
+    <table class="tabela-lista">
+      <thead>
+        <tr>
+          <th>Modulo</th>
+          <th>Descricao</th>
+          <th>Acesso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hospedagens</td>
+          <td>Consulta de anuncios, valores, enderecos e comodidades.</td>
+          <td><a class="btn-lista" href="{% url 'hospedagens:hospedagens_lista' %}">Abrir</a></td>
+        </tr>
+        <tr>
+          <td>Reservas</td>
+          <td>Acompanhamento de check-in, check-out, status e valores.</td>
+          <td><a class="btn-lista" href="{% url 'reservas:reservas_lista' %}">Abrir</a></td>
+        </tr>
+        <tr>
+          <td>Pagamentos</td>
+          <td>Registro e acompanhamento de pagamentos das reservas.</td>
+          <td><a class="btn-lista" href="{% url 'pagamentos:pagamentos_lista' %}">Abrir</a></td>
+        </tr>
+        <tr>
+          <td>Mensagens</td>
+          <td>Contato entre hospedes e administracao da hospedaria.</td>
+          <td><a class="btn-lista" href="{% url 'mensagens:mensagens_lista' %}">Abrir</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+{% endblock body %}
