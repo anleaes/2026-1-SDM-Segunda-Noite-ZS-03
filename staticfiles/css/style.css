@@ -7,7 +7,7 @@ body {
 }
 
 header {
-  background-color: #1a325a;
+  background-color: #5587dc;
   color: #fff;
   padding: 10px 20px;
 }
@@ -20,13 +20,13 @@ h1 {
 
 h2 {
   font-size: 1.5em;
-  color: #336bd3;
+  color: #183044;
   margin-bottom: 30px;
   margin-top: -10px;
 }
 
 h3 {
-  color: #1a325a;
+  color: #5587dc;
 }
 
 a {
@@ -87,9 +87,14 @@ li .nav-item:hover {
 }
 
 .home {
-  background-color: #1a325a;
+  background-color: #5e89d5;
   padding: 50px 20px;
   text-align: center;
+}
+
+.home h1 {
+  font-size: 4.5em;
+  margin: 0;
 }
 
 .slogan {

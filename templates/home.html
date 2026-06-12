@@ -6,21 +6,6 @@
 <main class="container">
   <div class="home">
     <h1>Hospedaria</h1>
-    <h2>Reservas e hospedagens</h2>
-    <p class="slogan">Sistema para gerenciar hospedagens, reservas, pagamentos, mensagens e avaliacoes.</p>
-
-    <div class="acoes">
-      {% if user.is_authenticated %}
-        <a href="{% url 'usuarios:perfil_usuario' %}" class="btn-primario">Meu Perfil</a>
-        <a href="{% url 'hospedagens:hospedagens_lista' %}" class="btn-secundario">Ver Hospedagens</a>
-        {% if is_anfitriao %}
-          <a href="{% url 'reservas:reservas_lista' %}" class="btn-secundario">Gerenciar Reservas</a>
-        {% endif %}
-      {% else %}
-        <a href="{% url 'usuarios:login_usuario' %}" class="btn-primario">Fazer Login</a>
-        <a href="{% url 'usuarios:cadastro_usuario' %}" class="btn-secundario">Cadastre-se</a>
-      {% endif %}
-    </div>
   </div>
 
   <section class="lista-container">

@@ -5,7 +5,7 @@
 body {
   margin: 0;
   background: #f4f5f7;
-  color: #111827;
+  color: #3e61ad;
   font-family: Arial, sans-serif;
 }
 
@@ -79,7 +79,7 @@ p {
 
 .badge {
   border-radius: 999px;
-  background: #dbeafe;
+  background: #03244f;
   color: #1d4ed8;
   padding: 4px 10px;
   font-size: 12px;
