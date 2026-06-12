@@ -1,50 +1,42 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ titulo }}</title>
-  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
-</head>
-<body>
-  <main class="page narrow">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">Hospedaria</p>
-        <h1>{{ titulo }}</h1>
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock title %}
+
+{% block body %}
+<div class="detail-container">
+  <h2 class="perfil-title">{{ titulo }}</h2>
+
+  <div class="perfil-secao">
+    <h3>Mensagem recebida</h3>
+    <p><strong>Assunto:</strong> {{ mensagem.assunto }}</p>
+    <p><strong>Mensagem:</strong> {{ mensagem.mensagem }}</p>
+    <p><strong>De:</strong> {{ mensagem.nome }} - {{ mensagem.email }}</p>
+    <p><strong>Hospedagem:</strong> {{ mensagem.hospedagem.titulo }}</p>
+  </div>
+
+  <hr>
+
+  <form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+      <div class="form-group-padrao">
+        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+        {{ field }}
+        {% for error in field.errors %}
+          <span class="erro">{{ error }}</span>
+        {% endfor %}
       </div>
-      <a class="button" href="{% url 'mensagens:mensagens_lista' %}">Voltar</a>
-    </header>
+    {% endfor %}
 
-    <article class="card">
-      <h2>{{ mensagem.assunto }}</h2>
-      <p class="description">{{ mensagem.mensagem }}</p>
-      <p class="meta"><strong>De:</strong> {{ mensagem.nome }} - {{ mensagem.email }}</p>
-      <p class="meta"><strong>Hospedagem:</strong> {{ mensagem.hospedagem.titulo }}</p>
-    </article>
+    {% if form.non_field_errors %}
+      <div class="erros-bloco">{{ form.non_field_errors }}</div>
+    {% endif %}
 
-    <form class="form-card" method="post">
-      {% csrf_token %}
-
-      {% for field in form %}
-        <div class="field">
-          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-          {{ field }}
-          {% for error in field.errors %}
-            <p class="error">{{ error }}</p>
-          {% endfor %}
-        </div>
-      {% endfor %}
-
-      {% if form.non_field_errors %}
-        <div class="error-box">
-          {{ form.non_field_errors }}
-        </div>
-      {% endif %}
-
-      <button class="button primary full" type="submit">Salvar resposta</button>
-    </form>
-  </main>
-</body>
-</html>
+    <div class="form-padrao-acoes">
+      <button type="submit" class="btn-primario">Salvar resposta</button>
+      <a href="{% url 'mensagens:mensagens_lista' %}" class="btn-voltar">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock body %}

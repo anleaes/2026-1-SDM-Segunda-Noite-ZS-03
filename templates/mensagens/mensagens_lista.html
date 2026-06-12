@@ -1,89 +1,62 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mensagens</title>
-  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
-</head>
-<body>
-  <main class="page">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">Hospedaria</p>
-        <h1>Mensagens</h1>
-      </div>
-      <a class="button primary" href="{% url 'mensagens:mensagem_criar' %}">Nova mensagem</a>
-    </header>
 
-    {% if messages %}
-      <section class="messages">
-        {% for message in messages %}
-          <p class="message {{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </section>
-    {% endif %}
+{% block title %}Mensagens{% endblock title %}
 
-    <section class="grid">
+{% block body %}
+<div class="lista-container">
+  <div class="section-header">
+    <h2>Lista de Mensagens</h2>
+    <a class="btn-primario" href="{% url 'mensagens:mensagem_criar' %}">+ Nova mensagem</a>
+  </div>
+
+  <p>Abaixo estao listadas as mensagens enviadas pelos hospedes.</p>
+
+  <table class="tabela-lista">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Assunto</th>
+        <th>Contato</th>
+        <th>Hospedagem</th>
+        <th>Status</th>
+        <th>Enviada em</th>
+        <th>Acoes</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for mensagem in mensagens %}
-        <article class="card">
-          <div class="card-header">
-            <h2>{{ mensagem.assunto }}</h2>
-            <span class="badge">{% if mensagem.lida %}Lida{% else %}Nao lida{% endif %}</span>
-          </div>
-
-          <p class="description">{{ mensagem.mensagem }}</p>
-
-          <dl class="details">
-            <div>
-              <dt>Nome</dt>
-              <dd>{{ mensagem.nome }}</dd>
+        <tr>
+          <td>#{{ mensagem.id }}</td>
+          <td>
+            <strong>{{ mensagem.assunto }}</strong><br>
+            {{ mensagem.mensagem|truncatechars:90 }}
+          </td>
+          <td>{{ mensagem.nome }}<br>{{ mensagem.email }}<br>{{ mensagem.telefone|default:"-" }}</td>
+          <td>{{ mensagem.hospedagem.titulo }}</td>
+          <td>
+            <span class="status-badge">{% if mensagem.lida %}Lida{% else %}Nao lida{% endif %}</span>
+          </td>
+          <td>{{ mensagem.enviada_em|date:"d/m/Y H:i" }}</td>
+          <td>
+            <div class="acoes-tabela">
+              <a class="btn-lista" href="{% url 'mensagens:mensagem_responder' mensagem.id %}">Responder</a>
+              <a class="btn-lista" href="{% url 'mensagens:mensagem_editar' mensagem.id %}">Editar</a>
+              <form class="delete-form" method="post" action="{% url 'mensagens:mensagem_excluir' mensagem.id %}">
+                {% csrf_token %}
+                <button class="btn-lista btn-excluir" type="submit">Excluir</button>
+              </form>
             </div>
-            <div>
-              <dt>Email</dt>
-              <dd>{{ mensagem.email }}</dd>
-            </div>
-            <div>
-              <dt>Telefone</dt>
-              <dd>{{ mensagem.telefone|default:"-" }}</dd>
-            </div>
-            <div>
-              <dt>Enviada em</dt>
-              <dd>{{ mensagem.enviada_em|date:"d/m/Y H:i" }}</dd>
-            </div>
-          </dl>
-
-          <p class="meta">
-            <strong>Hospedagem:</strong>
-            {{ mensagem.hospedagem.titulo }}
-          </p>
-
-          {% if mensagem.resposta %}
-            <p class="meta">
-              <strong>Resposta:</strong>
-              {{ mensagem.resposta }}
-            </p>
-          {% endif %}
-
-          <div class="actions">
-            <a class="button primary" href="{% url 'mensagens:mensagem_responder' mensagem.id %}">Responder</a>
-            <a class="button" href="{% url 'mensagens:mensagem_editar' mensagem.id %}">Editar</a>
-            <form class="delete-form" method="post" action="{% url 'mensagens:mensagem_excluir' mensagem.id %}">
-              {% csrf_token %}
-              <button class="button danger" type="submit">Excluir</button>
-            </form>
-          </div>
-        </article>
+          </td>
+        </tr>
       {% empty %}
-        <div class="empty">
-          <h2>Nenhuma mensagem cadastrada</h2>
-          <p>Crie a primeira mensagem para visualizar os registros aqui.</p>
-        </div>
+        <tr>
+          <td class="empty-row" colspan="7">Nenhuma mensagem cadastrada.</td>
+        </tr>
       {% endfor %}
-    </section>
-  </main>
+    </tbody>
+  </table>
+</div>
 
-  <script src="{% static 'js/mensagens.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'js/mensagens.js' %}"></script>
+{% endblock body %}

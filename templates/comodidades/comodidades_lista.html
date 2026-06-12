@@ -1,68 +1,56 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comodidades</title>
-  <link rel="stylesheet" href="{% static 'css/hospedagens.css' %}">
-</head>
-<body>
-  <main class="page">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">Hospedaria</p>
-        <h1>Comodidades</h1>
-      </div>
-      <a class="button primary" href="{% url 'comodidades:comodidade_criar' %}">Nova comodidade</a>
-    </header>
 
-    {% if messages %}
-      <section class="messages">
-        {% for message in messages %}
-          <p class="message {{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </section>
-    {% endif %}
+{% block title %}Comodidades{% endblock title %}
 
-    <section class="grid">
+{% block body %}
+<div class="lista-container">
+  <div class="section-header">
+    <h2>Lista de Comodidades</h2>
+    <a class="btn-primario" href="{% url 'comodidades:comodidade_criar' %}">+ Nova comodidade</a>
+  </div>
+
+  <p>Abaixo estao listadas as comodidades disponiveis nas hospedagens.</p>
+
+  <table class="tabela-lista">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descricao</th>
+        <th>Icone</th>
+        <th>Status</th>
+        <th>Acoes</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for comodidade in comodidades %}
-        <article class="card">
-          <div class="card-header">
-            <h2>{{ comodidade.nome }}</h2>
-            <span class="badge">{% if comodidade.ativo %}Ativa{% else %}Inativa{% endif %}</span>
-          </div>
-
-          <p class="description">{{ comodidade.descricao }}</p>
-
-          <dl class="details">
-            <div>
-              <dt>Icone</dt>
-              <dd>{{ comodidade.icone|default:"-" }}</dd>
+        <tr>
+          <td>#{{ comodidade.id }}</td>
+          <td>{{ comodidade.nome }}</td>
+          <td>{{ comodidade.descricao }}</td>
+          <td>{{ comodidade.icone|default:"-" }}</td>
+          <td>
+            <span class="status-badge">{% if comodidade.ativo %}Ativa{% else %}Inativa{% endif %}</span>
+          </td>
+          <td>
+            <div class="acoes-tabela">
+              <a class="btn-lista" href="{% url 'comodidades:comodidade_editar' comodidade.id %}">Editar</a>
+              <form class="delete-form" method="post" action="{% url 'comodidades:comodidade_excluir' comodidade.id %}">
+                {% csrf_token %}
+                <button class="btn-lista btn-excluir" type="submit">Excluir</button>
+              </form>
             </div>
-            <div>
-              <dt>Status</dt>
-              <dd>{% if comodidade.ativo %}Disponivel{% else %}Indisponivel{% endif %}</dd>
-            </div>
-          </dl>
-
-          <div class="actions">
-            <a class="button" href="{% url 'comodidades:comodidade_editar' comodidade.id %}">Editar</a>
-            <form class="delete-form" method="post" action="{% url 'comodidades:comodidade_excluir' comodidade.id %}">
-              {% csrf_token %}
-              <button class="button danger" type="submit">Excluir</button>
-            </form>
-          </div>
-        </article>
+          </td>
+        </tr>
       {% empty %}
-        <div class="empty">
-          <h2>Nenhuma comodidade cadastrada</h2>
-          <p>Crie a primeira comodidade para visualizar os registros aqui.</p>
-        </div>
+        <tr>
+          <td class="empty-row" colspan="6">Nenhuma comodidade cadastrada.</td>
+        </tr>
       {% endfor %}
-    </section>
-  </main>
+    </tbody>
+  </table>
+</div>
 
-  <script src="{% static 'js/comodidades.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'js/comodidades.js' %}"></script>
+{% endblock body %}
